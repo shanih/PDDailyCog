@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">PDDailyCog</string>
+
+    <!--Sign in -->
+    <string name="sign_in">Sign In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="ok">OK</string>
+    <string name="welcome_text">welcome</string>
+    <string name="open_settings">Open Airplane Mode Settings</string>
+    <string name="airplane_mode_request">Please Set Airplane Mode</string>
+    <string name="error_not_in_airplane_mode">You are not in Airplane Mode</string>
+    <string name="error_no_more_chores">no more chores</string>
+    <string name="exit_alert_header">Warning</string>
+    <string name="exit_alert_message">You are quiting without finishing the chore. Are you sure?</string>
+
+
+</resources>

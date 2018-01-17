@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "724781082256",
+    "firebase_url": "https://pddailycog.firebaseio.com",
+    "project_id": "pddailycog",
+    "storage_bucket": "pddailycog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724781082256:android:d8c71338b0cd32d9",
+        "android_client_info": {
+          "package_name": "il.ac.pddailycogresearch.pddailycog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724781082256-892g7mbvucr279c7id8242gnajdairab.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "il.ac.pddailycogresearch.pddailycog",
+            "certificate_hash": "c5d34ec38234b7c6b944693b780b013e122b1dba"
+          }
+        },
+        {
+          "client_id": "724781082256-vhunmcms3lkjuail9qmd5935bquikchi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "il.ac.pddailycogresearch.pddailycog",
+            "certificate_hash": "108ffd0de5f17958d2b0d72c6555db957d249d87"
+          }
+        },
+        {
+          "client_id": "724781082256-st3bjd1bvgpvmjoc8jd3f9e15o0dde31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAEzhpp4Cm1z_PB10EAxVUqIo0pzviJAs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724781082256-st3bjd1bvgpvmjoc8jd3f9e15o0dde31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724781082256:android:a1caabf429c6f7a0",
+        "android_client_info": {
+          "package_name": "pddailycogresearch.ac.il.pddailycog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724781082256-iis2av3ijqmhr7p2jh386m3g14qr8f1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pddailycogresearch.ac.il.pddailycog",
+            "certificate_hash": "c5d34ec38234b7c6b944693b780b013e122b1dba"
+          }
+        },
+        {
+          "client_id": "724781082256-st3bjd1bvgpvmjoc8jd3f9e15o0dde31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAEzhpp4Cm1z_PB10EAxVUqIo0pzviJAs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724781082256-st3bjd1bvgpvmjoc8jd3f9e15o0dde31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
