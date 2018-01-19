@@ -21,6 +21,8 @@ public final class ImageUtils {
     private static final String TAG = "ImageUtils";
     public static final String IMAGE_ABSOLUTE_PATH = "image_absolute_path";
 
+    public static String lastTakenImageAbsolutePath; //TODO ask Tal for better sulotion
+
     private ImageUtils() {
         // This utility class is not publicly instantiable
     }
@@ -47,6 +49,7 @@ public final class ImageUtils {
                 photoFile = createImageFile(context);
             } catch (IOException ex) {
                 // Error occurred while creating the File
+                ex.printStackTrace();
             //TODO error handling
             }
             // Continue only if the File was successfully created
@@ -55,6 +58,7 @@ public final class ImageUtils {
                         "il.ac.pddailycogresearch.pddailycog.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                lastTakenImageAbsolutePath=photoFile.getAbsolutePath();
                 //so the activity can know the absolute path
                 takePictureIntent.putExtra(IMAGE_ABSOLUTE_PATH, photoFile.getAbsolutePath());
                return takePictureIntent;
@@ -63,10 +67,7 @@ public final class ImageUtils {
         return null;
     }
 
-    public static void setPic(ImageView mImageView, String mCurrentPhotoPath) {
-        // Get the dimensions of the View
-        int targetW = mImageView.getWidth();
-        int targetH = mImageView.getHeight();
+    public static void setPic(ImageView mImageView, String mCurrentPhotoPath, int targetH, int targetW) {
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();

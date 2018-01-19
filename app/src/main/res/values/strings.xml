@@ -5,6 +5,7 @@
     <string name="sign_in">Sign In</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+
     <string name="ok">OK</string>
     <string name="welcome_text">welcome</string>
     <string name="open_settings">Open Airplane Mode Settings</string>
@@ -13,6 +14,12 @@
     <string name="error_no_more_chores">no more chores</string>
     <string name="exit_alert_header">Warning</string>
     <string name="exit_alert_message">You are quiting without finishing the chore. Are you sure?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="take_picture">take picture</string>
+    <string name="instructions">Instructions</string>
+    <string name="re_take_picture">replace picture</string>
 
 
 </resources>
