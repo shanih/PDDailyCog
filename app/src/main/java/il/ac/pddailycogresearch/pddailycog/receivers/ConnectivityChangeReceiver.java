@@ -14,7 +14,7 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListen
 import il.ac.pddailycogresearch.pddailycog.model.Chore;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 
-public class ConnectivityChangeReceiver extends BroadcastReceiver {
+public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if too much for users to call this every time...
     private static final String TAG = ConnectivityChangeReceiver.class.getSimpleName();
     /***
      * allow checking wither this is the first receiver

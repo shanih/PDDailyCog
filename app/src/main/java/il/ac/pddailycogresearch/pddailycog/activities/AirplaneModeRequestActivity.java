@@ -29,10 +29,10 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                 startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                 break;
             case R.id.buttonAirplaneOk:
-                if(isAirplaneMode())
+               // if(isAirplaneMode()) TODO uncomment but its annoying
                     openNextChoreActivity();
-                else
-                    CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);
+//                else
+//                    CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);
                 break;
         }
     }

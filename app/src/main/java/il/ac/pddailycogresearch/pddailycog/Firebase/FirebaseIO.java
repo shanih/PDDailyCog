@@ -42,14 +42,14 @@ public class FirebaseIO {
     private static FirebaseIO sInstance;
 
     // DB..
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mUserReference;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference mUserReference;
 
     // AUTH..
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    int mCurrentUserLoginState = FIREBASE_LOGIN_STATE_NOT_AVAILBLE;
+    private int mCurrentUserLoginState = FIREBASE_LOGIN_STATE_NOT_AVAILBLE;
 
     private IOnFireBasLoginEventListener mIOnFireBasLoginEventListener;
     private StorageReference mStorageReference;
@@ -96,7 +96,7 @@ public class FirebaseIO {
                     mCurrentUserLoginState = FIREBASE_LOGIN_STATE_NOT_AVAILBLE;
 
                     if (mIOnFireBasLoginEventListener != null)
-                        mIOnFireBasLoginEventListener.onUserLoginError("User Is Signed Out..");
+                        mIOnFireBasLoginEventListener.onUserLoginError("User Is Signed Out.."); //ask Tal
 
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -183,8 +183,8 @@ public class FirebaseIO {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(activity, "Authentication failed.",
+                        if (!task.isSuccessful()&&task.getException()!=null) {
+                            Toast.makeText(activity, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                             task.getException().printStackTrace();
                         }
