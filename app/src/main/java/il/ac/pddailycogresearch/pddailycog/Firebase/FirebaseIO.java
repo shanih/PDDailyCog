@@ -183,8 +183,8 @@ public class FirebaseIO {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(activity, "Authentication failed.",
+                        if (!task.isSuccessful()&&task.getException()!=null) {
+                            Toast.makeText(activity, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                             task.getException().printStackTrace();
                         }

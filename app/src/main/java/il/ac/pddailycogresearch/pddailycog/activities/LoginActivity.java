@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -18,6 +20,19 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initViews();
+        mFirebaseIO.setIOnFireBaseLoginEventListener(
+                new IOnFireBasLoginEventListener() {
+                    @Override
+                    public void onUserLogin() {
+                        finish();
+                    }
+
+                    @Override
+                    public void onUserLoginError(String Msg) {
+                        CommonUtils.showMessage(LoginActivity.this,Msg);
+                    }
+                }
+        );
 
     }
 
