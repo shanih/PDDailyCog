@@ -27,7 +27,7 @@ public class Chore implements Serializable {
         this.currentPartNum=1;
         this.completed = false;
         this.instructionClicksNum = 0;
-        this.takePicClickNum=0;
+        this.takePicClicksNum =0;
         this.instructionTotalTime=0;
         this.takePictureTotalTime=0;
         this.textInputTotalTime=0;
@@ -37,13 +37,15 @@ public class Chore implements Serializable {
 
     private Boolean completed;
 
-    private Integer choreNum;
+    private int choreNum;
 
-    private Integer currentPartNum;
+    private int currentPartNum;
 
-    private Integer instructionClicksNum;
+    private int instructionClicksNum;
 
-    private Integer takePicClickNum;
+    private int takePicClicksNum;
+
+    private int soundInstrClicksNum;
 
     private String resultImg;
 
@@ -70,29 +72,29 @@ public class Chore implements Serializable {
 
 
 
-    public void setChoreNum(Integer choreNum) {
+    public void setChoreNum(int choreNum) {
         this.choreNum = choreNum;
     }
 
-    public Integer getChoreNum() {
+    public int getChoreNum() {
         return choreNum;
     }
 
 
 
-    public Integer getCurrentPartNum() {
+    public int getCurrentPartNum() {
         return currentPartNum;
     }
 
-    public void setCurrentPartNum(Integer currentPartNum) {
+    public void setCurrentPartNum(int currentPartNum) {
         this.currentPartNum = currentPartNum;
     }
 
-    public Integer getInstructionClicksNum() {
+    public int getInstructionClicksNum() {
         return instructionClicksNum;
     }
 
-    public void setInstructionClicksNum(Integer instructionClicksNum) {
+    public void setInstructionClicksNum(int instructionClicksNum) {
         this.instructionClicksNum = instructionClicksNum;
     }
 
@@ -100,16 +102,28 @@ public class Chore implements Serializable {
         this.instructionClicksNum++;
     }
 
-    public Integer getTakePicClickNum() {
-        return takePicClickNum;
+    public int getTakePicClicksNum() {
+        return takePicClicksNum;
     }
 
-    public void setTakePicClickNum(Integer takePicClickNum) {
-        this.takePicClickNum = takePicClickNum;
+    public void setTakePicClicksNum(int takePicClicksNum) {
+        this.takePicClicksNum = takePicClicksNum;
     }
 
     public void increaseTakePicClickNum() {
-        this.takePicClickNum++;
+        this.takePicClicksNum++;
+    }
+
+    public int getSoundInstrClicksNum() {
+        return soundInstrClicksNum;
+    }
+
+    public void setSoundInstrClicksNum(int soundInstrClicksNum) {
+        this.soundInstrClicksNum = soundInstrClicksNum;
+    }
+
+    public void increaseSoundInstrClicksNum() {
+        this.soundInstrClicksNum++;
     }
 
     public String getResultImg() {

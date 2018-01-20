@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,8 +7,14 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewInstructionFragment"
+        android:text="@string/trail_chore_instruction" />
+    <Button
+        android:id="@+id/buttonInstructionFragmentSound"
+        android:layout_below="@id/textViewInstructionFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sound"/>
 
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+</RelativeLayout>

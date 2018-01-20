@@ -1,16 +1,18 @@
 package il.ac.pddailycogresearch.pddailycog.fragments;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
 
@@ -19,23 +21,27 @@ import il.ac.pddailycogresearch.pddailycog.R;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link InstructionFragment#newInstance} factory method to
+ * Use the {@link TextInputFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InstructionFragment extends Fragment {
+public class TextInputFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    @BindView(R.id.EditTextInputFragment)
+    EditText EditTextInputFragment;
     Unbinder unbinder;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private int previousTextInputLength;
 
-    public InstructionFragment() {
+    public TextInputFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +51,11 @@ public class InstructionFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment InstructionFragment.
+     * @return A new instance of fragment TextInputFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static InstructionFragment newInstance(String param1, String param2) {
-        InstructionFragment fragment = new InstructionFragment();
+    public static TextInputFragment newInstance(String param1, String param2) {
+        TextInputFragment fragment = new TextInputFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -70,18 +76,17 @@ public class InstructionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_instruction, container, false);
+        View view = inflater.inflate(R.layout.fragment_text_input, container, false);
         unbinder = ButterKnife.bind(this, view);
+        mListener.onTextInputFragmentCreateView();
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-            mListener.onInstructionFragmentAttach();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -91,7 +96,6 @@ public class InstructionFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener.onInstructionFragmentDetach();
         mListener = null;
     }
 
@@ -101,30 +105,20 @@ public class InstructionFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.buttonInstructionFragmentSound)
-    public void onViewClicked() {
-            MediaPlayer mpori;
-            mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.temp_audio_instr);
-            mpori.start();
-        mListener.onSoundButtonClick();
+    @OnTextChanged(value = R.id.EditTextInputFragment,
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void afterTextInput(Editable editable) {
+        if (previousTextInputLength > editable.length())
+            mListener.onCharacterDeleted(editable.toString());
+        if (previousTextInputLength < editable.length())
+           mListener.onCharacterAdded(editable.toString());
+        previousTextInputLength = editable.length();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onSoundButtonClick();
-
-        void onInstructionFragmentAttach();
-
-        void onInstructionFragmentDetach();
+        void onTextInputFragmentCreateView();
+        void onCharacterAdded(String inputText);
+        void onCharacterDeleted(String inputText);
     }
 }
