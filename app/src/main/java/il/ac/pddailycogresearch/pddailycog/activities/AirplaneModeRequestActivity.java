@@ -6,7 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,10 +32,10 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                 startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                 break;
             case R.id.buttonAirplaneOk:
-               // if(isAirplaneMode()) TODO uncomment but its annoying
-                    openNextChoreActivity();
-//                else
-//                    CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);
+              //  if(isAirplaneMode()) //TODO uncomment but its annoying
+                    openNextChoreActivity();/*
+                else
+                    CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);*/
                 break;
         }
     }
@@ -52,4 +55,5 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
 
         }
     }
+
 }

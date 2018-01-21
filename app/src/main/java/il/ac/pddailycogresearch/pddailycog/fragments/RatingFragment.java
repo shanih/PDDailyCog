@@ -1,16 +1,17 @@
 package il.ac.pddailycogresearch.pddailycog.fragments;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
 
@@ -20,46 +21,62 @@ import il.ac.pddailycogresearch.pddailycog.R;
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class InstructionFragment extends Fragment {
+public class RatingFragment extends Fragment {
+    @BindView(R.id.radioGroupRatingFragment)
+    RadioGroup radioGroupRatingFragment;
     Unbinder unbinder;
-
     private OnFragmentInteractionListener mListener;
 
-    public InstructionFragment() {
+    public RatingFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_instruction, container, false);
+        View view = inflater.inflate(R.layout.fragment_rating, container, false);
         unbinder = ButterKnife.bind(this, view);
+        initViews();
         return view;
     }
 
+    private void initViews() {
+        View.OnClickListener radioButtonsListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {/*
+                int radioButtonID = radioGroupRatingFragment.getCheckedRadioButtonId();
+                View radioButton = radioGroupRatingFragment.findViewById(radioButtonID);*/
+                int idx = radioGroupRatingFragment.indexOfChild(v);
+                mListener.onRatingChanged(idx+1);
+            }
+        };
+
+        for (int i = 1; i <= 5; i++) {
+            RadioButton rb = new RadioButton(getContext());
+            rb.setText(String.valueOf(i));
+            rb.setOnClickListener(radioButtonsListener);
+            radioGroupRatingFragment.addView(rb);
+        }
+        radioGroupRatingFragment.setOrientation(LinearLayout.HORIZONTAL);
+
+    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-            mListener.onInstructionFragmentAttach();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener.onInstructionFragmentDetach();
         mListener = null;
     }
 
@@ -69,13 +86,6 @@ public class InstructionFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.buttonInstructionFragmentSound)
-    public void onViewClicked() {
-            MediaPlayer mpori;
-            mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.temp_audio_instr);
-            mpori.start();
-        mListener.onSoundButtonClick();
-    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -88,10 +98,6 @@ public class InstructionFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onSoundButtonClick();
-
-        void onInstructionFragmentAttach();
-
-        void onInstructionFragmentDetach();
+        void onRatingChanged(int rating);
     }
 }

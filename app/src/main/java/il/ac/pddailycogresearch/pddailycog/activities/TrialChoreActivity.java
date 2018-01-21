@@ -1,7 +1,5 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +16,7 @@ import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.fragments.InstructionFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.RatingFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.TakePictureFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.TextInputFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
@@ -25,12 +24,14 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastCho
 import il.ac.pddailycogresearch.pddailycog.model.Chore;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 
 public class TrialChoreActivity extends AppCompatActivity implements
         TakePictureFragment.OnFragmentInteractionListener,
         InstructionFragment.OnFragmentInteractionListener,
-        TextInputFragment.OnFragmentInteractionListener{
+        TextInputFragment.OnFragmentInteractionListener,
+RatingFragment.OnFragmentInteractionListener{
 
     private static final String TAG = TrialChoreActivity.class.getSimpleName();
 
@@ -44,8 +45,8 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     private Chore currentChore;
     private FirebaseIO firebaseIO = FirebaseIO.getInstance();
-    private long startCurrentViewedPartTime = 0;//TODO put in saved instance
-    private boolean isInstructionClicked = false;//TODO put in saved instance
+    private long startCurrentViewedPartTime;
+    private boolean isInstructionClicked;//TODO put in save instance
 
 
     @Override
@@ -60,6 +61,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
         partsFragments.add(new InstructionFragment());
         partsFragments.add(new TakePictureFragment());
         partsFragments.add(new TextInputFragment());
+        partsFragments.add(new RatingFragment());
         initChore();
     }
 
@@ -71,7 +73,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     @Override
     protected void onStop() {
-        terminateChore(); //TODO ask Tal for right place?
+        terminateChore();
         super.onStop();
     }
 
@@ -97,7 +99,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     private void updateCurrentChore(Chore chore) {
         if (chore.isCompleted()) {
-            int nextChore = chore.getChoreNum() + 1;
+            int nextChore = chore.getTaskNum() + 1;
             if (nextChore <= Consts.CHORES_AMOUNT)
                 currentChore = new Chore(nextChore);
             else {
@@ -151,19 +153,21 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     private void showExitAlertDialog() {
-        CommonUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
+        DialogUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
+                android.R.string.ok, android.R.string.cancel,
                 new IOnAlertDialogResultListener() {
                     @Override
                     public void onResult(boolean result) {
                         if (result) {
                             terminateChore();
-                            finish();
+                            DialogUtils.createTurnOffAirplaneModeAlertDialog(TrialChoreActivity.this);
+                           // finish();
                         }
                     }
                 });
     }
 
-    private void updateTiming(Integer partEnded) { //TODO test
+    private void updateTiming(Integer partEnded) {
         if (this.startCurrentViewedPartTime != 0) {
             long timeElapsed = System.currentTimeMillis() - this.startCurrentViewedPartTime;
             switch (partEnded) {
@@ -182,12 +186,9 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     private void finishChore() {
-        //TODO UI, ask Tal pretty way to close things
         currentChore.setCompleted(true);
         terminateChore();
-        /*getMvpView().showMessage(R.string.chore_finished);
-        finish();*/
-        //TODO
+        DialogUtils.createGoodbyeDialog(this);
     }
 
     private void terminateChore(){
@@ -198,6 +199,23 @@ public class TrialChoreActivity extends AppCompatActivity implements
         firebaseIO.saveChore(currentChore);
     }
 
+    //region fragments callbacks
+
+    //instructionFragment callback
+    @Override
+    public void onSoundButtonClick() {
+        currentChore.increaseSoundInstrClicksNum();
+    }
+
+    @Override
+    public void onInstructionFragmentAttach() {
+        buttonTrialChoreInstruction.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onInstructionFragmentDetach() {
+        buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
+    }
 
     //takePictureFragment callback
 
@@ -222,22 +240,6 @@ public class TrialChoreActivity extends AppCompatActivity implements
         buttonTrialChoreOk.setEnabled(true);
     }
 
-    //instructionFragment callback
-    @Override
-    public void onSoundButtonClick() {
-        currentChore.increaseSoundInstrClicksNum();
-    }
-
-    @Override
-    public void onInstructionFragmentAttach() {
-        buttonTrialChoreInstruction.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onInstructionFragmentDetach() {
-        buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
-    }
-
     //text input fragment callback
 
     @Override
@@ -246,8 +248,10 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onCharacterAdded(String inputText) {
+    public void onCharacterAdded(String inputText, long timeBeforeCharacter) {
         buttonTrialChoreOk.setEnabled(true);
+        if(currentChore.getAddedCharactersNum()==0)
+            currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
         currentChore.increaseAddedCharacters();
         currentChore.setResultText(inputText);
     }
@@ -260,4 +264,18 @@ public class TrialChoreActivity extends AppCompatActivity implements
         currentChore.setResultText(inputText);
     }
 
+    @Override
+    public void onTextInputFragmentDetach(long timeBeforeCharacter) {
+        buttonTrialChoreOk.setEnabled(true);
+        if(currentChore.getAddedCharactersNum()==0)
+            currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
+
+    }
+
+    //rating fragment callback
+    @Override
+    public void onRatingChanged(int rating) {
+        currentChore.setResultRating(rating);
+    }
+    //endregion
 }
