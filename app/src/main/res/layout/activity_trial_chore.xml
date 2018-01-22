@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <Button style="@style/StyleButton"
             android:id="@+id/buttonTrialChoreInstruction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,13 +20,13 @@
             android:layout_alignParentStart="true"
             android:text="@string/instructions" />
 
-        <Button
+        <Button style="@style/StyleButton"
             android:id="@+id/buttonTrialChoreExit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="exit" />
+            android:background="@drawable/exit"
+            android:layout_alignParentRight="true"             />
 
     </RelativeLayout>
 
@@ -45,7 +45,7 @@
         </fragment>-->
     </FrameLayout>
 
-    <Button
+    <Button style="@style/StyleButton"
         android:id="@+id/buttonTrialChoreOk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
