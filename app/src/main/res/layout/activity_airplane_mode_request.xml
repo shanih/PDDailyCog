@@ -25,7 +25,7 @@
         android:layout_below="@id/buttonOpenAirplaneModeSettings"
         android:layout_marginTop="25dp"
         android:layout_centerHorizontal="true"
-        android:text="@string/ok"
+        android:background="@drawable/continue_button"
         android:id="@+id/buttonAirplaneOk"/>
 
 </RelativeLayout>

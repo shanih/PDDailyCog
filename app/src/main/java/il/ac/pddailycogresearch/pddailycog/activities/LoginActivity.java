@@ -1,4 +1,4 @@
-package il.ac.pckddailycogresearch.pddailycog.activities;
+package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
