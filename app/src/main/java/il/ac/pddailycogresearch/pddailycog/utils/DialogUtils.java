@@ -4,6 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
@@ -16,10 +23,35 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListen
  */
 
 public class DialogUtils {
+    private static ProgressDialog mProgressDialog;
+
     private DialogUtils(){
 
     }
 
+    private static ProgressDialog createLoadingDialog(Context context) {
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.show();
+        if (progressDialog.getWindow() != null) {
+            progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        return progressDialog;
+    }
+
+    public static void showLoading(Context context) {
+        hideLoading();
+        mProgressDialog = createLoadingDialog(context);
+    }
+
+    public static void hideLoading() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.cancel();
+        }
+    }
 
     public static void createAlertDialog(final Context context, @StringRes final int title, @StringRes final int message,
                                          @StringRes final int positiveButton, @StringRes final int negativeButton,
@@ -85,4 +117,10 @@ public class DialogUtils {
                 });
     }
 
+    private static void closeApp(Activity activity) {
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN)
+            activity.finishAffinity();//ask Tal
+        else
+            activity.finish();
+    }
 }

@@ -34,11 +34,13 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
     private void saveChoreImageInDB(Context context) {
 
         final FirebaseIO firebaseIO = FirebaseIO.getInstance();
+        if(!firebaseIO.isUserLogged())
+            return;
         firebaseIO.retrieveLastChore(
                 new IOnFirebaseRetrieveLastChoreListener() {
                     @Override
                     public void onChoreRetrieved(final Chore chore) {
-                        if (chore.getResultImg() != null && chore.getResultImg().split(":")[0].equals(Consts.LOCAL_URI_PREFIX))
+                        if (chore!=null&&chore.getResultImg() != null && chore.getResultImg().split(":")[0].equals(Consts.LOCAL_URI_PREFIX))
                             firebaseIO.saveImage(Uri.parse(chore.getResultImg()),
                                     new IOnFirebaseSaveImageListener() {
                                         @Override

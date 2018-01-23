@@ -16,4 +16,5 @@ public class Consts {
     public static final int CHORES_AMOUNT = 1;
 
     public static final String QUESTIONNAIRE_KEY = "questionnaire";
+    public static final String EMAIL_SUFFIX = "@pddaily.ac.il";
 }

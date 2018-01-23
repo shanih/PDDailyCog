@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
-import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
 import il.ac.pddailycogresearch.pddailycog.model.Chore;
@@ -74,7 +73,7 @@ public class FirebaseIO {
     }
 
     private void initUserDatabaseReference() {
-        if(mAuth.getCurrentUser()!=null) {
+        if (mAuth.getCurrentUser() != null) {
             mUserReference = database.getReference(Consts.USERS_KEY).child(mAuth.getCurrentUser().getUid());
             mUserReference.keepSynced(true);//because persistence is enable, need to make sure the data is synced with database
             mStorageReference = FirebaseStorage.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
@@ -115,18 +114,18 @@ public class FirebaseIO {
 
     }
 
-    public void retrieveLastChore(final IOnFirebaseRetrieveLastChoreListener onFirebaseRetrieveLastChoreListener){
+    public void retrieveLastChore(final IOnFirebaseRetrieveLastChoreListener onFirebaseRetrieveLastChoreListener) {
         Query lastChoreQuery = mUserReference.child(Consts.CHORES_KEY).orderByKey().limitToLast(1);
         lastChoreQuery.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Chore chore =null;
+                        Chore chore = null;
                         if (dataSnapshot.getChildren().iterator().hasNext()) {
                             DataSnapshot ds = dataSnapshot.getChildren().iterator().next();
                             chore = ds.getValue(Chore.class);
                         }
-                       onFirebaseRetrieveLastChoreListener.onChoreRetrieved(chore);
+                        onFirebaseRetrieveLastChoreListener.onChoreRetrieved(chore);
                     }
 
                     @Override
@@ -170,8 +169,8 @@ public class FirebaseIO {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                @SuppressWarnings("VisibleForTests")  Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                Log.d(TAG,"image been saved in: "+downloadUrl.toString());
+                @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                Log.d(TAG, "image been saved in: " + downloadUrl.toString());
                 onFirebaseSaveImageListener.onImageSaved(downloadUrl);
             }
         });
@@ -185,6 +184,8 @@ public class FirebaseIO {
     }
 
     public void signUpNewUser(final Activity activity, String email, String password) {
+    public void signUpNewUser(Activity activity, String email, String password,
+                              final IOnFirebaseErrorListener firebaseErrorListener) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -194,10 +195,8 @@ public class FirebaseIO {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()&&task.getException()!=null) {
-                            Toast.makeText(activity, task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                            task.getException().printStackTrace();
+                        if (!task.isSuccessful() && task.getException() != null) {
+                            firebaseErrorListener.onError(task.getException());
                         }
 
                     }
@@ -244,7 +243,12 @@ public class FirebaseIO {
     public int getCurrentLoginState() {
         return mCurrentUserLoginState;
     }
-    public boolean isUserLogged(){
-        return mAuth.getCurrentUser()!=null;
+
+    public boolean isUserLogged() {
+        return mAuth.getCurrentUser() != null;
+    }
+
+    public void logout() {
+        mAuth.signOut();
     }
 }
