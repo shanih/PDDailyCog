@@ -1,20 +1,15 @@
-package il.ac.pddailycogresearch.pddailycog.activities;
+package il.ac.pddailycogresearch.pddailycog.activities.simple;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
+import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
 
 public class AirplaneModeRequestActivity extends AppCompatActivity {
 
@@ -45,15 +40,6 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
         Intent nextActivity = new Intent(AirplaneModeRequestActivity.this,
                 TrialChoreActivity.class);
         startActivity(nextActivity);
-    }
-
-    public boolean isAirplaneMode() {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
-            return Settings.System.getInt(this.getContentResolver(),Settings.Global.AIRPLANE_MODE_ON,0)==1;
-        } else {
-            return Settings.System.getInt(this.getContentResolver(),Settings.System.AIRPLANE_MODE_ON,0)==1;
-
-        }
     }
 
 }

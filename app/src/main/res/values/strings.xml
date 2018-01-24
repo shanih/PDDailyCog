@@ -32,5 +32,8 @@
     <string name="extremely_well">Extremely  Well</string>
     <string name="goodbye_title">Thank You</string>
     <string name="goodbye_msg">You have completed the chore</string>
+    <string name="exit">Exit</string>
+    <string name="error_in_airplane_mode">You ar stil in Airplane Mode</string>
+    <string name="close_airplane_mode">close airplane mode</string>
 
 </resources>

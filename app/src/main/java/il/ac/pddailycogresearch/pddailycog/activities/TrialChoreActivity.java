@@ -1,5 +1,6 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.activities.simple.ExitActivity;
+import il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity;
 import il.ac.pddailycogresearch.pddailycog.fragments.InstructionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.RatingFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.TakePictureFragment;
@@ -104,7 +107,7 @@ RatingFragment.OnFragmentInteractionListener{
                 currentChore = new Chore(nextChore);
             else {
                 CommonUtils.showMessage(this, R.string.error_no_more_chores);
-                currentChore = new Chore(1);
+                currentChore = new Chore(1);//TODO delete, decide what to do
             }
         } else
             this.currentChore = chore;
@@ -188,7 +191,9 @@ RatingFragment.OnFragmentInteractionListener{
     private void finishChore() {
         currentChore.setCompleted(true);
         terminateChore();
-        DialogUtils.createGoodbyeDialog(this);
+       // DialogUtils.createGoodbyeDialog(this);
+        startActivity(new Intent(TrialChoreActivity.this, GoodByeActivity.class));
+
     }
 
     private void terminateChore(){
@@ -270,6 +275,11 @@ RatingFragment.OnFragmentInteractionListener{
         if(currentChore.getAddedCharactersNum()==0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 
     //rating fragment callback

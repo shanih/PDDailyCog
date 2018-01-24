@@ -38,4 +38,20 @@ public final class CommonUtils {
     public static String getTimeStamp() {
         return new SimpleDateFormat(Consts.TIMESTAMP_FORMAT, Locale.US).format(new Date());
     }
+
+    public static void closeApp(Activity activity) {
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN)
+            activity.finishAffinity();//ask Tal
+        else
+            activity.finish();//TODO
+    }
+
+    public static boolean isAirplaneMode(Context context) {
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
+            return Settings.System.getInt(context.getContentResolver(),Settings.Global.AIRPLANE_MODE_ON,0)==1;
+        } else {
+            return Settings.System.getInt(context.getContentResolver(),Settings.System.AIRPLANE_MODE_ON,0)==1;
+
+        }
+    }
 }
