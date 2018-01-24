@@ -21,6 +21,7 @@
         <item name="android:background">@color/colorButtons</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">italic</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_centerHorizontal">true</item>
