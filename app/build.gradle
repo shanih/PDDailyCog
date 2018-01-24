@@ -25,6 +25,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    // code generator for view
+
     compile "com.android.support:appcompat-v7:27.0.2"
     compile "com.android.support:design:27.0.2"
     compile "com.android.support.constraint:constraint-layout:1.0.2"
@@ -38,11 +40,6 @@ dependencies {
 
     testCompile "junit:junit:4.12"
 }
-
-
-
-
-
 
 
 apply plugin: 'com.google.gms.google-services'

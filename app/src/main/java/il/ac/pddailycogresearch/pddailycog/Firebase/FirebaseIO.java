@@ -42,14 +42,14 @@ public class FirebaseIO {
     private static FirebaseIO sInstance;
 
     // DB..
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mUserReference;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference mUserReference;
 
     // AUTH..
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    int mCurrentUserLoginState = FIREBASE_LOGIN_STATE_NOT_AVAILBLE;
+    private int mCurrentUserLoginState = FIREBASE_LOGIN_STATE_NOT_AVAILBLE;
 
     private IOnFireBasLoginEventListener mIOnFireBasLoginEventListener;
     private StorageReference mStorageReference;
@@ -58,7 +58,6 @@ public class FirebaseIO {
         database.setPersistenceEnabled(true);
         mAuth = FirebaseAuth.getInstance();
 
-       // initListeners();
         initAuthListener();
         initUserDatabaseReference();
     }
@@ -96,7 +95,7 @@ public class FirebaseIO {
                     mCurrentUserLoginState = FIREBASE_LOGIN_STATE_NOT_AVAILBLE;
 
                     if (mIOnFireBasLoginEventListener != null)
-                        mIOnFireBasLoginEventListener.onUserLoginError("User Is Signed Out..");
+                        mIOnFireBasLoginEventListener.onUserLoginError("User Is Signed Out.."); //ask Tal
 
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
@@ -105,30 +104,10 @@ public class FirebaseIO {
         };
     }
 
-    private void initListeners() {
-        // TODO - Add Firebase DB Listeners..
-
-//        // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG, "Value is: " + value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
-    }
 
     public void saveChore(Chore chore) {
         mUserReference.child(Consts.CHORES_KEY)
-                .child(String.valueOf(chore.getChoreNum())).setValue(chore);
+                .child(String.valueOf(chore.getTaskNum())).setValue(chore);
 
     }
 

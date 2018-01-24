@@ -15,11 +15,22 @@
     <string name="exit_alert_header">Warning</string>
     <string name="exit_alert_message">You are quiting without finishing the chore. Are you sure?</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="take_picture">take picture</string>
     <string name="instructions">Instructions</string>
     <string name="re_take_picture">replace picture</string>
+    <string name="enter_text_input_hint">Enter Text Input Here</string>
+    <string name="sound">sound</string>
 
+
+    <string name="trail_chore_instruction">take your phone, find your key, put it on your bed and shoot a photo. sit there nnd insert time and date and your full name</string>
+    <string name="reminder">Reminder</string>
+    <string name="turn_off_airplane_mode_alert_msg">It\'s reccomended that you turn off aurplane mode when exiting the app</string>
+    <string name="close">Close</string>
+
+    <string name="rating_question">How well do you think you did with the task?</string>
+    <string name="not_well">Not Well</string>
+    <string name="extremely_well">Extremely  Well</string>
+    <string name="goodbye_title">Thank You</string>
+    <string name="goodbye_msg">You have completed the chore</string>
 
 </resources>

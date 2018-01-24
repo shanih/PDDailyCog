@@ -13,7 +13,7 @@
     <string name="exit_alert_message">אתה יוצא מבלי לסיים את המשימה. האם אתה בטוח?</string>
     <!--Error messages-->
     <string name="some_error">התרחשה שגיאה</string>
-    <string name="error_no_more_chores">nאין עוד משימות</string>
+    <string name="error_no_more_chores">אין עוד משימות</string>
 
     <!--Sign Up-->
     <string name="signup">הרשמה</string>
@@ -28,20 +28,20 @@
     <string name="login_failed">התחברות נכשלה</string>
     <string name="unmatch_passwords">הסיסמאות אינן תואמות</string>
     <string name="logged_in">המשתמש קיים, התחברת לחשבון</string>
-    <string name="take_picture">take picture</string>
-    <string name="instructions">Instructions</string>
-    <string name="re_take_picture">replace picture</string>
+    <string name="take_picture">צלם תמונה</string>
+    <string name="instructions">הוראות</string>
+    <string name="re_take_picture">צלם מחדש</string>
+    <string name="enter_text_input_hint">הכנס משימת טקסט</string>
+    <string name="sound">השמע</string>
+    <string name="trail_chore_instruction">קח את הטלפון וכוס מהמטבח, לך לחדר השינה, מקם את הכוס על כיסא או מדף בחדר השינה (צלם).  הקלד בטלפון התאריך והשעה ואז שם מלא (שם ושם משפחה) של אמא שלך</string>
+    <string name="reminder">תזכורת</string>
+    <string name="turn_off_airplane_mode_alert_msg">מומלץ לכבות את מצב הטיסה בעת עזיבת האפליקציה</string>
+    <string name="close">סגור</string>
+    <string name="rating_question">עד כמה טוב אתה חושב שביצעת את המשימה?</string>
+    <string name="not_well">לא טוב</string>
+    <string name="extremely_well">מצוין</string>
+    <string name="goodbye_title">תודה</string>
+    <string name="goodbye_msg">השלמת את המשימה</string>
 
-
-    <!--Chore Texts-->
-    <string-array name="chore_headers">
-        <item>הוראה</item>
-        <item>צלם תמונה</item>
-        <item>הכנס טקסט</item>
-    </string-array>
-
-    <string-array name="chore_instructions">
-        <item>קח את הטלפון וכוס מהמטבח, לך לחדר השינה, מקם את הכוס על כיסא או מדף בחדר השינה (צלם).  הקלד בטלפון התאריך והשעה ואז שם מלא (שם ושם משפחה) של אמא שלך</item>
-    </string-array>
 
 </resources>

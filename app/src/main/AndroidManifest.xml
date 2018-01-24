@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.AirplaneModeRequestActivity" />
+        <activity android:name=".activities.AirplaneModeRequestActivity"
+            />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

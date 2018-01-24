@@ -1,6 +1,5 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,16 +16,22 @@ import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.fragments.InstructionFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.RatingFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.TakePictureFragment;
+import il.ac.pddailycogresearch.pddailycog.fragments.TextInputFragment;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.model.Chore;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
+import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 
 public class TrialChoreActivity extends AppCompatActivity implements
         TakePictureFragment.OnFragmentInteractionListener,
-        InstructionFragment.OnFragmentInteractionListener {
+        InstructionFragment.OnFragmentInteractionListener,
+        TextInputFragment.OnFragmentInteractionListener,
+RatingFragment.OnFragmentInteractionListener{
 
     private static final String TAG = TrialChoreActivity.class.getSimpleName();
 
@@ -40,8 +45,8 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     private Chore currentChore;
     private FirebaseIO firebaseIO = FirebaseIO.getInstance();
-    private long startCurrentViewedPartTime = 0;//TODO put in saved instance
-    private boolean isInstructionClicked = false;//TODO put in saved instance
+    private long startCurrentViewedPartTime;
+    private boolean isInstructionClicked;//TODO put in save instance
 
 
     @Override
@@ -53,15 +58,22 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     private void initMembers() {
-        startCurrentViewedPartTime = System.currentTimeMillis();
         partsFragments.add(new InstructionFragment());
         partsFragments.add(new TakePictureFragment());
+        partsFragments.add(new TextInputFragment());
+        partsFragments.add(new RatingFragment());
         initChore();
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        startCurrentViewedPartTime = System.currentTimeMillis();
+    }
+
+    @Override
     protected void onStop() {
-        firebaseIO.saveChore(currentChore);//TODO ask Tal?
+        terminateChore();
         super.onStop();
     }
 
@@ -87,7 +99,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     private void updateCurrentChore(Chore chore) {
         if (chore.isCompleted()) {
-            int nextChore = chore.getChoreNum() + 1;
+            int nextChore = chore.getTaskNum() + 1;
             if (nextChore <= Consts.CHORES_AMOUNT)
                 currentChore = new Chore(nextChore);
             else {
@@ -141,19 +153,21 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     private void showExitAlertDialog() {
-        CommonUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
+        DialogUtils.createAlertDialog(this, R.string.exit_alert_header, R.string.exit_alert_message,
+                android.R.string.ok, android.R.string.cancel,
                 new IOnAlertDialogResultListener() {
                     @Override
                     public void onResult(boolean result) {
                         if (result) {
-                            firebaseIO.saveChore(currentChore);
-                            finish();
+                            terminateChore();
+                            DialogUtils.createTurnOffAirplaneModeAlertDialog(TrialChoreActivity.this);
+                           // finish();
                         }
                     }
                 });
     }
 
-    private void updateTiming(Integer partEnded) { //TODO test
+    private void updateTiming(Integer partEnded) {
         if (this.startCurrentViewedPartTime != 0) {
             long timeElapsed = System.currentTimeMillis() - this.startCurrentViewedPartTime;
             switch (partEnded) {
@@ -171,45 +185,26 @@ public class TrialChoreActivity extends AppCompatActivity implements
         this.startCurrentViewedPartTime = System.currentTimeMillis();
     }
 
-
     private void finishChore() {
-        //TODO UI, ask Tal pretty way to close things
-        updateTiming(Chore.PartsConstants.PARTS_AMOUNT);//update last part timing
         currentChore.setCompleted(true);
-        firebaseIO.saveChore(currentChore);
-        /*getMvpView().showMessage(R.string.chore_finished);
-        finish();*/
-        //TODO
+        terminateChore();
+        DialogUtils.createGoodbyeDialog(this);
     }
 
-
-    //takePictureFragment callback
-
-    @Override
-    public void onPictureBeenTaken(String imgUri) {
-        currentChore.increaseTakePicClickNum();
-        currentChore.setResultImg(imgUri.toString());
-        buttonTrialChoreOk.setEnabled(true);
-    }
-
-    @Override
-    public void onTakePictureFragmentViewCreated() {
-        if (currentChore.getResultImg() == null)
-            buttonTrialChoreOk.setEnabled(false);
+    private void terminateChore(){
+       if(isInstructionClicked)
+           updateTiming(Chore.PartsConstants.INSTRUCTION);
         else
-            ((TakePictureFragment)partsFragments.get(Chore.PartsConstants.TAKE_PICTURE-1))
-                    .setLastTakenImageToView();
+            updateTiming(currentChore.getCurrentPartNum());
+        firebaseIO.saveChore(currentChore);
     }
 
-    @Override
-    public void onTakePictureFragmentDetach() {
-        buttonTrialChoreOk.setEnabled(true);
-    }
+    //region fragments callbacks
 
     //instructionFragment callback
     @Override
-    public void onSoundButtonClick(Uri uri) {
-
+    public void onSoundButtonClick() {
+        currentChore.increaseSoundInstrClicksNum();
     }
 
     @Override
@@ -221,4 +216,66 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onInstructionFragmentDetach() {
         buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
     }
+
+    //takePictureFragment callback
+
+    @Override
+    public void onPictureBeenTaken(String imgPath) {
+        currentChore.increaseTakePicClickNum();
+        currentChore.setResultImg(imgPath);
+        buttonTrialChoreOk.setEnabled(true);
+    }
+
+    @Override
+    public void onTakePictureFragmentViewCreated() {
+        if (ImageUtils.lastTakenImageAbsolutePath == null)
+            buttonTrialChoreOk.setEnabled(false);
+        else
+            ((TakePictureFragment)partsFragments.get(Chore.PartsConstants.TAKE_PICTURE-1))
+                    .setLastTakenImageToView();
+    }
+
+    @Override
+    public void onTakePictureFragmentDetach() {
+        buttonTrialChoreOk.setEnabled(true);
+    }
+
+    //text input fragment callback
+
+    @Override
+    public void onTextInputFragmentCreateView() {
+        buttonTrialChoreOk.setEnabled(false);
+    }
+
+    @Override
+    public void onCharacterAdded(String inputText, long timeBeforeCharacter) {
+        buttonTrialChoreOk.setEnabled(true);
+        if(currentChore.getAddedCharactersNum()==0)
+            currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
+        currentChore.increaseAddedCharacters();
+        currentChore.setResultText(inputText);
+    }
+
+    @Override
+    public void onCharacterDeleted(String inputText) {
+        if(inputText.isEmpty())
+            buttonTrialChoreOk.setEnabled(false);
+        currentChore.increaseDeletedCharaters();
+        currentChore.setResultText(inputText);
+    }
+
+    @Override
+    public void onTextInputFragmentDetach(long timeBeforeCharacter) {
+        buttonTrialChoreOk.setEnabled(true);
+        if(currentChore.getAddedCharactersNum()==0)
+            currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
+
+    }
+
+    //rating fragment callback
+    @Override
+    public void onRatingChanged(int rating) {
+        currentChore.setResultRating(rating);
+    }
+    //endregion
 }
