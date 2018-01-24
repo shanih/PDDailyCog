@@ -35,5 +35,7 @@
     <string name="exit">Exit</string>
     <string name="error_in_airplane_mode">You ar stil in Airplane Mode</string>
     <string name="close_airplane_mode">close airplane mode</string>
+    <string name="open_questionnaire">open questionnaire</string>
+
 
 </resources>

@@ -5,7 +5,7 @@
     <string name="sign_in">היכנס</string>
 
     <string name="ok">אישור</string>
-    <string name="welcome_text">welcome</string>
+    <string name="welcome_text">ברוך הבא, אתה אמור לעשות משימות</string>
     <string name="open_settings">פתח הגדרות מצב טיסה</string>
     <string name="airplane_mode_request">אנא הכנס את המכשיר למצב טיסה</string>
     <string name="error_not_in_airplane_mode">המכשיר אינו במצב טיסה</string>
@@ -40,10 +40,11 @@
     <string name="not_well">לא טוב</string>
     <string name="extremely_well">מצוין</string>
     <string name="goodbye_title">תודה</string>
-    <string name="goodbye_msg">השלמת את המשימה</string>
+    <string name="goodbye_msg">השלמת את המשימה, רוב תודות, שא ברכה</string>
     <string name="exit">יציאה</string>
     <string name="error_in_airplane_mode">לא בוצעה יציאה ממצב טיסה</string>
-    <string name="close_airplane_mode">close airplane mode</string>
+    <string name="close_airplane_mode">סגור מצב טיסה לפני יציאתך</string>
+    <string name="open_questionnaire">פתח שאלון</string>
 
 
 </resources>

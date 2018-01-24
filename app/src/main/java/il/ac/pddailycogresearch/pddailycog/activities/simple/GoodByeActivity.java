@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 
 public class GoodByeActivity extends AppCompatActivity {
 
@@ -19,6 +20,8 @@ public class GoodByeActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonGoodByeOK)
     public void onViewClicked() {
-        startActivity(new Intent(this,ExitActivity.class));
+        if(CommonUtils.isAirplaneMode(this))
+            startActivity(new Intent(this,ExitActivity.class));
+        CommonUtils.closeApp(this);
     }
 }

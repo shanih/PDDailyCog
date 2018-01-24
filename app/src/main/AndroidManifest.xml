@@ -42,7 +42,8 @@
 
         <activity android:name=".activities.TrialChoreActivity" />
         <activity android:name=".activities.simple.ExitActivity" />
-        <activity android:name=".activities.simple.GoodByeActivity"></activity>
+        <activity android:name=".activities.simple.GoodByeActivity" />
+        <activity android:name=".activities.QuestionnaireActivity"></activity>
     </application>
 
 </manifest>
