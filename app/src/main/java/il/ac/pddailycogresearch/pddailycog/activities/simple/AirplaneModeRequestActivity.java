@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 
 public class AirplaneModeRequestActivity extends AppCompatActivity {
 
@@ -27,9 +28,9 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                 startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                 break;
             case R.id.buttonAirplaneOk:
-              //  if(isAirplaneMode()) //TODO uncomment but its annoying
-                    openNextChoreActivity();/*
-                else
+            //    if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
+                    openNextChoreActivity();
+            /*    else
                     CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);*/
                 break;
         }

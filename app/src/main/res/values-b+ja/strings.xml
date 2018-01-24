@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">PDDailyCog</string>
+
+    <!--Sign in -->
+    <string name="sign_in">Sign In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+
+    <string name="ok">OK</string>
+    <string name="welcome_text">welcome</string>
+    <string name="open_settings">Open Airplane Mode Settings</string>
+    <string name="airplane_mode_request">Please Set Airplane Mode</string>
+    <string name="error_not_in_airplane_mode">You are not in Airplane Mode</string>
+    <string name="error_no_more_chores">no more chores</string>
+    <string name="exit_alert_header">Warning</string>
+    <string name="exit_alert_message">You are quiting without finishing the chore. Are you sure?</string>
+
+    <string name="take_picture">take picture</string>
+    <string name="instructions">Instructions</string>
+    <string name="re_take_picture">replace picture</string>
+    <string name="enter_text_input_hint">Enter Text Input Here</string>
+    <string name="sound">sound</string>
+
+
+    <string name="trail_chore_instruction">take your phone, find your key, put it on your bed and shoot a photo. sit there nnd insert time and date and your full name</string>
+    <string name="reminder">Reminder</string>
+    <string name="turn_off_airplane_mode_alert_msg">It\'s reccomended that you turn off aurplane mode when exiting the app</string>
+    <string name="close">Close</string>
+
+    <string name="rating_question">How well do you think you did with the task?</string>
+    <string name="not_well">Not Well</string>
+    <string name="extremely_well">Extremely  Well</string>
+    <string name="goodbye_title">Thank You</string>
+    <string name="goodbye_msg">You have completed the chore</string>
+    <string name="exit">Exit</string>
+    <string name="error_in_airplane_mode">You ar stil in Airplane Mode</string>
+    <string name="close_airplane_mode">close airplane mode</string>
+    <string name="open_questionnaire">open questionnaire</string>
+
+
+</resources>
