@@ -18,9 +18,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.StepActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.AirplaneModeRequestActivity"
-            />
+        <activity android:name=".activities.simple.AirplaneModeRequestActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -41,7 +47,10 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.TrialChoreActivity"></activity>
+        <activity android:name=".activities.TrialChoreActivity" />
+        <activity android:name=".activities.simple.ExitActivity" />
+        <activity android:name=".activities.simple.GoodByeActivity" />
+        <activity android:name=".activities.QuestionnaireActivity"></activity>
     </application>
 
 </manifest>

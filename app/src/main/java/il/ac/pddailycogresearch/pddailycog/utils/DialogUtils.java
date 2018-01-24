@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
@@ -71,7 +70,7 @@ public class DialogUtils {
                     public void onResult(boolean result) {
                         if(result)
                             activity.startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
-                        closeApp(activity);
+                        CommonUtils.closeApp(activity);
                     }
                 });
     }
@@ -86,10 +85,4 @@ public class DialogUtils {
                 });
     }
 
-    private static void closeApp(Activity activity) {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN)
-            activity.finishAffinity();//ask Tal
-        else
-            activity.finish();
-    }
 }

@@ -23,7 +23,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
 import il.ac.pddailycogresearch.pddailycog.model.Chore;
@@ -134,6 +138,27 @@ public class FirebaseIO {
         );
     }
 
+    public void retrieveQuestionnaire(final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener){
+        mUserReference.child(Consts.QUESTIONNAIRE_KEY).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<Integer> answers = new ArrayList<Integer>();
+                        for (DataSnapshot valSnapshot: dataSnapshot.getChildren()) {
+                            answers.add(valSnapshot.getValue(Integer.class));
+                        }
+                        firebaseQuestionnaireListener.onAnswersRetreived(answers);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        firebaseQuestionnaireListener.onError(databaseError.toException());
+
+                    }
+                }
+        );
+    }
+
     public void saveImage(Uri imageUri, final IOnFirebaseSaveImageListener onFirebaseSaveImageListener) {
         UploadTask uploadTask = mStorageReference.child(imageUri.getLastPathSegment()).putFile(imageUri);
         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -150,6 +175,13 @@ public class FirebaseIO {
                 onFirebaseSaveImageListener.onImageSaved(downloadUrl);
             }
         });
+    }
+
+    public void saveQuestionnaireAnswer(int key, int value){
+        mUserReference.child(Consts.QUESTIONNAIRE_KEY).child(String.valueOf(key)).setValue(value);
+    }
+    public void saveQuestionnaireAnswer(List<Integer> answers){
+        mUserReference.child(Consts.QUESTIONNAIRE_KEY).setValue(answers);
     }
 
     public void signUpNewUser(final Activity activity, String email, String password) {

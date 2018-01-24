@@ -15,4 +15,5 @@ public class Consts {
     public static final Double IMAGEVIEW_HEIGHT_PERCENTAGE = 0.60;
     public static final int CHORES_AMOUNT = 1;
 
+    public static final String QUESTIONNAIRE_KEY = "questionnaire";
 }
