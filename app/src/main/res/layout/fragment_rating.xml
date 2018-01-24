@@ -1,11 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.RatingFragment">
 
     <TextView
+        style="@style/StyleTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/rating_question" />
@@ -15,6 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 <TextView
+    style="@style/StyleTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/not_well"/>
@@ -25,6 +27,7 @@
 
         </RadioGroup>
         <TextView
+            style="@style/StyleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/extremely_well"/>

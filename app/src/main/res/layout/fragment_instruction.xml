@@ -1,19 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.InstructionFragment">
 
     <TextView
+        style="@style/StyleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewInstructionFragment"
         android:text="@string/trail_chore_instruction" />
     <Button
+        style="@style/StyleButton"
         android:id="@+id/buttonInstructionFragmentSound"
         android:layout_below="@id/textViewInstructionFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sound"/>
+
 
 </RelativeLayout>

@@ -47,6 +47,10 @@
     <string name="error_in_airplane_mode">לא בוצעה יציאה ממצב טיסה</string>
     <string name="close_airplane_mode">סגור מצב טיסה לפני יציאתך</string>
     <string name="open_questionnaire">פתח שאלון</string>
+    <string name="continue_">המשך</string>
+
+
+    <string name="before_instr">לפניך מספר הנחיות שהנך מתבקש לבצע. אנא עקוב אחר ההוראות. באפשרותך לשמוע את ההנחיות על ידי לחיצה על סימן הרמקול. מרגע שתלחץ על "בצע", ההנחיה תעלם מהמסך אך תוכל לחזור לקרוא אותה שוב.</string>
 
 
 </resources>
