@@ -117,10 +117,4 @@ public class DialogUtils {
                 });
     }
 
-    private static void closeApp(Activity activity) {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN)
-            activity.finishAffinity();//ask Tal
-        else
-            activity.finish();
-    }
 }

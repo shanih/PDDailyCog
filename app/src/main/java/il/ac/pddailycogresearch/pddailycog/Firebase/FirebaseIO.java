@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
 import il.ac.pddailycogresearch.pddailycog.model.Chore;
@@ -183,7 +185,7 @@ public class FirebaseIO {
         mUserReference.child(Consts.QUESTIONNAIRE_KEY).setValue(answers);
     }
 
-    public void signUpNewUser(final Activity activity, String email, String password) {
+
     public void signUpNewUser(Activity activity, String email, String password,
                               final IOnFirebaseErrorListener firebaseErrorListener) {
         mAuth.createUserWithEmailAndPassword(email, password)

@@ -48,6 +48,10 @@ public class TextInputFragment extends Fragment {
         return view;
     }
 
+    public void setTextToEditText(String text){
+        EditTextInputFragment.setText(text);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

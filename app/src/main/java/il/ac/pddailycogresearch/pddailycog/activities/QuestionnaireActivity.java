@@ -105,6 +105,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         if (answers[questionIdx] != -1) {
             int id = radioGroupQuestionnaireAns.getChildAt(answers[questionIdx]).getId();
             radioGroupQuestionnaireAns.check(id);
+            buttonQuestionnaireOK.setEnabled(true);
         } else
             buttonQuestionnaireOK.setEnabled(false);
 

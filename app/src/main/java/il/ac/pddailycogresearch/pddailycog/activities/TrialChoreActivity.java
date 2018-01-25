@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.activities.simple.ExitActivity;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity;
 import il.ac.pddailycogresearch.pddailycog.fragments.InstructionFragment;
 import il.ac.pddailycogresearch.pddailycog.fragments.RatingFragment;
@@ -34,7 +33,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
         TakePictureFragment.OnFragmentInteractionListener,
         InstructionFragment.OnFragmentInteractionListener,
         TextInputFragment.OnFragmentInteractionListener,
-RatingFragment.OnFragmentInteractionListener{
+        RatingFragment.OnFragmentInteractionListener {
 
     private static final String TAG = TrialChoreActivity.class.getSimpleName();
 
@@ -164,7 +163,7 @@ RatingFragment.OnFragmentInteractionListener{
                         if (result) {
                             terminateChore();
                             DialogUtils.createTurnOffAirplaneModeAlertDialog(TrialChoreActivity.this);
-                           // finish();
+                            // finish();
                         }
                     }
                 });
@@ -191,17 +190,23 @@ RatingFragment.OnFragmentInteractionListener{
     private void finishChore() {
         currentChore.setCompleted(true);
         terminateChore();
-       // DialogUtils.createGoodbyeDialog(this);
+        // DialogUtils.createGoodbyeDialog(this);
         startActivity(new Intent(TrialChoreActivity.this, GoodByeActivity.class));
 
     }
 
-    private void terminateChore(){
-       if(isInstructionClicked)
-           updateTiming(Chore.PartsConstants.INSTRUCTION);
+    private void terminateChore() {
+        if (isInstructionClicked)
+            updateTiming(Chore.PartsConstants.INSTRUCTION);
         else
             updateTiming(currentChore.getCurrentPartNum());
         firebaseIO.saveChore(currentChore);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 
     //region fragments callbacks
@@ -236,7 +241,7 @@ RatingFragment.OnFragmentInteractionListener{
         if (ImageUtils.lastTakenImageAbsolutePath == null)
             buttonTrialChoreOk.setEnabled(false);
         else
-            ((TakePictureFragment)partsFragments.get(Chore.PartsConstants.TAKE_PICTURE-1))
+            ((TakePictureFragment) partsFragments.get(Chore.PartsConstants.TAKE_PICTURE - 1))
                     .setLastTakenImageToView();
     }
 
@@ -249,13 +254,17 @@ RatingFragment.OnFragmentInteractionListener{
 
     @Override
     public void onTextInputFragmentCreateView() {
-        buttonTrialChoreOk.setEnabled(false);
+        if (currentChore.getResultText() == null || currentChore.getResultText().isEmpty())
+            buttonTrialChoreOk.setEnabled(false);
+        else
+            ((TextInputFragment) partsFragments.get(Chore.PartsConstants.TEXT_INPUT - 1))
+                    .setTextToEditText(currentChore.getResultText());
     }
 
     @Override
     public void onCharacterAdded(String inputText, long timeBeforeCharacter) {
         buttonTrialChoreOk.setEnabled(true);
-        if(currentChore.getAddedCharactersNum()==0)
+        if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
         currentChore.increaseAddedCharacters();
         currentChore.setResultText(inputText);
@@ -263,7 +272,7 @@ RatingFragment.OnFragmentInteractionListener{
 
     @Override
     public void onCharacterDeleted(String inputText) {
-        if(inputText.isEmpty())
+        if (inputText.isEmpty())
             buttonTrialChoreOk.setEnabled(false);
         currentChore.increaseDeletedCharaters();
         currentChore.setResultText(inputText);
@@ -271,21 +280,29 @@ RatingFragment.OnFragmentInteractionListener{
 
     @Override
     public void onTextInputFragmentDetach(long timeBeforeCharacter) {
-        buttonTrialChoreOk.setEnabled(true);
-        if(currentChore.getAddedCharactersNum()==0)
+        //     buttonTrialChoreOk.setEnabled(true);
+        if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
 
     }
 
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
-    }
 
     //rating fragment callback
     @Override
+    public void onRatingFragmentAttach() {
+        if (currentChore.getResultRating() == 0)
+            buttonTrialChoreOk.setEnabled(false);
+        else {
+            ((RatingFragment) partsFragments.get(Chore.PartsConstants.RATING - 1))
+                    .setRatingSelection(currentChore.getResultRating());
+            buttonTrialChoreOk.setEnabled(true);
+        }
+    }
+
+    @Override
     public void onRatingChanged(int rating) {
         currentChore.setResultRating(rating);
+        buttonTrialChoreOk.setEnabled(true);
     }
     //endregion
 }

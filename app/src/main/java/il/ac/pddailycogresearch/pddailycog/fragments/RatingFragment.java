@@ -26,6 +26,7 @@ public class RatingFragment extends Fragment {
     RadioGroup radioGroupRatingFragment;
     Unbinder unbinder;
     private OnFragmentInteractionListener mListener;
+    private int selection;
 
     public RatingFragment() {
         // Required empty public constructor
@@ -48,7 +49,7 @@ public class RatingFragment extends Fragment {
                 int radioButtonID = radioGroupRatingFragment.getCheckedRadioButtonId();
                 View radioButton = radioGroupRatingFragment.findViewById(radioButtonID);*/
                 int idx = radioGroupRatingFragment.indexOfChild(v);
-                mListener.onRatingChanged(idx+1);
+                mListener.onRatingChanged(idx + 1);
             }
         };
 
@@ -57,6 +58,8 @@ public class RatingFragment extends Fragment {
             rb.setText(String.valueOf(i));
             rb.setOnClickListener(radioButtonsListener);
             radioGroupRatingFragment.addView(rb);
+            if (i == selection - 1)
+                radioGroupRatingFragment.check(rb.getId());
         }
         radioGroupRatingFragment.setOrientation(LinearLayout.HORIZONTAL);
 
@@ -67,6 +70,7 @@ public class RatingFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+            mListener.onRatingFragmentAttach();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -86,6 +90,10 @@ public class RatingFragment extends Fragment {
         unbinder.unbind();
     }
 
+    public void setRatingSelection(int resultRating) {
+        selection = resultRating;
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -98,6 +106,8 @@ public class RatingFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
+        void onRatingFragmentAttach();
+
         void onRatingChanged(int rating);
     }
 }

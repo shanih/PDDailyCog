@@ -8,6 +8,7 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
@@ -26,6 +27,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.buttonOpenAirplaneModeSettings:
                 startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
+               // FirebaseIO.getInstance().logout();
                 break;
             case R.id.buttonAirplaneOk:
             //    if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
@@ -37,7 +39,7 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
     }
 
     private void openNextChoreActivity() {
-        //decide which chore should be made
+        //TODO decide which chore should be made
         Intent nextActivity = new Intent(AirplaneModeRequestActivity.this,
                 TrialChoreActivity.class);
         startActivity(nextActivity);
