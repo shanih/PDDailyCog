@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -22,8 +24,11 @@ import il.ac.pddailycogresearch.pddailycog.R;
  */
 public class InstructionFragment extends Fragment {
     Unbinder unbinder;
+    @BindView(R.id.buttonInstructionFragmentSound)
+    Button buttonInstructionFragmentSound;
 
     private OnFragmentInteractionListener mListener;
+    private MediaPlayer mpori;
 
     public InstructionFragment() {
         // Required empty public constructor
@@ -71,9 +76,16 @@ public class InstructionFragment extends Fragment {
 
     @OnClick(R.id.buttonInstructionFragmentSound)
     public void onViewClicked() {
-            MediaPlayer mpori;
-            mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.temp_audio_instr);
+        if (mpori==null||!mpori.isPlaying()) {
+            mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.cog_trial);
             mpori.start();
+            buttonInstructionFragmentSound.setText(R.string.stop);
+        } else {
+            mpori.stop();
+            buttonInstructionFragmentSound.setText(R.string.sound);
+
+        }
+
         mListener.onSoundButtonClick();
     }
 
