@@ -69,13 +69,13 @@ public class InstructionFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.buttonInstructionFragmentSound)
-    public void onViewClicked() {
-            MediaPlayer mpori;
-            mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.temp_audio_instr);
-            mpori.start();
-        mListener.onSoundButtonClick();
-    }
+//    @OnClick(R.id.buttonInstructionFragmentSound)
+//    public void onViewClicked() {
+//            MediaPlayer mpori;
+//            mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.temp_audio_instr);
+//            mpori.start();
+//        mListener.onSoundButtonClick();
+//    }
 
     /**
      * This interface must be implemented by activities that contain this

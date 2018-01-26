@@ -135,14 +135,12 @@ public class TakePictureFragment extends Fragment {
     }
 
     private void setImageToView(String absolutePath) {
-
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int screenHeight = metrics.heightPixels;
         int imageHeight = (int) Math.round(screenHeight * Consts.IMAGEVIEW_HEIGHT_PERCENTAGE);
         int imageWidth = metrics.widthPixels;
-        imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
-
+               imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
         ImageUtils.setPic(imageViewTakePictureFragment, absolutePath, imageHeight, imageWidth);
         buttonTakePictureFragment.setText(R.string.re_take_picture);
     }

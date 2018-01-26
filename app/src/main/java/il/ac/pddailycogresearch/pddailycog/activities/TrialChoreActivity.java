@@ -1,7 +1,9 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +46,9 @@ RatingFragment.OnFragmentInteractionListener{
     @BindView(R.id.buttonTrialChoreInstruction)
     Button buttonTrialChoreInstruction;
 
+    @BindView(R.id.button_sound)
+    FloatingActionButton button_sound;
+
     ArrayList<Fragment> partsFragments = new ArrayList<>();
 
     private Chore currentChore;
@@ -71,6 +76,7 @@ RatingFragment.OnFragmentInteractionListener{
     @Override
     protected void onStart() {
         super.onStart();
+        button_sound.setVisibility(View.GONE);
         startCurrentViewedPartTime = System.currentTimeMillis();
     }
 
@@ -115,7 +121,7 @@ RatingFragment.OnFragmentInteractionListener{
     }
 
 
-    @OnClick({R.id.buttonTrialChoreOk, R.id.buttonTrialChoreInstruction,R.id.buttonExit})
+    @OnClick({R.id.buttonTrialChoreOk, R.id.buttonTrialChoreInstruction,R.id.buttonExit, R.id.button_sound})
     public void onViewClicked(View view) {
         switch (view.getId()) {
                         case R.id.buttonExit:
@@ -127,6 +133,15 @@ RatingFragment.OnFragmentInteractionListener{
                 currentChore.increaseInstrcClicksNum();
                 replaceFragment(Chore.PartsConstants.INSTRUCTION);
                 break;
+            case R.id.button_sound:
+                MediaPlayer mpori;
+                mpori = MediaPlayer.create(getApplicationContext(), R.raw.temp_audio_instr);
+                mpori.start();
+                onSoundButtonClick();
+                break;
+
+
+
             case R.id.buttonTrialChoreOk:
                 moveToNextPart();
                 replaceFragment(currentChore.getCurrentPartNum());
@@ -215,11 +230,13 @@ RatingFragment.OnFragmentInteractionListener{
     @Override
     public void onInstructionFragmentAttach() {
         buttonTrialChoreInstruction.setVisibility(View.GONE);
+        button_sound.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onInstructionFragmentDetach() {
         buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
+        button_sound.setVisibility(View.GONE);
     }
 
     //takePictureFragment callback
@@ -229,12 +246,16 @@ RatingFragment.OnFragmentInteractionListener{
         currentChore.increaseTakePicClickNum();
         currentChore.setResultImg(imgPath);
         buttonTrialChoreOk.setEnabled(true);
+        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
     }
 
     @Override
     public void onTakePictureFragmentViewCreated() {
-        if (ImageUtils.lastTakenImageAbsolutePath == null)
+        if (ImageUtils.lastTakenImageAbsolutePath == null) {
             buttonTrialChoreOk.setEnabled(false);
+
+            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+        }
         else
             ((TakePictureFragment)partsFragments.get(Chore.PartsConstants.TAKE_PICTURE-1))
                     .setLastTakenImageToView();
@@ -243,6 +264,8 @@ RatingFragment.OnFragmentInteractionListener{
     @Override
     public void onTakePictureFragmentDetach() {
         buttonTrialChoreOk.setEnabled(true);
+
+        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
     }
 
     //text input fragment callback
@@ -250,11 +273,15 @@ RatingFragment.OnFragmentInteractionListener{
     @Override
     public void onTextInputFragmentCreateView() {
         buttonTrialChoreOk.setEnabled(false);
+
+        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
     }
 
     @Override
     public void onCharacterAdded(String inputText, long timeBeforeCharacter) {
         buttonTrialChoreOk.setEnabled(true);
+
+        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
         if(currentChore.getAddedCharactersNum()==0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
         currentChore.increaseAddedCharacters();
@@ -265,6 +292,8 @@ RatingFragment.OnFragmentInteractionListener{
     public void onCharacterDeleted(String inputText) {
         if(inputText.isEmpty())
             buttonTrialChoreOk.setEnabled(false);
+
+        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
         currentChore.increaseDeletedCharaters();
         currentChore.setResultText(inputText);
     }
@@ -272,6 +301,8 @@ RatingFragment.OnFragmentInteractionListener{
     @Override
     public void onTextInputFragmentDetach(long timeBeforeCharacter) {
         buttonTrialChoreOk.setEnabled(true);
+
+        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
         if(currentChore.getAddedCharactersNum()==0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
 
