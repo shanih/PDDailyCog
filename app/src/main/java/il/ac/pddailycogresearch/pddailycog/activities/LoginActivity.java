@@ -18,7 +18,6 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 
 public class LoginActivity extends AppCompatActivity {
-//TODO hide keyword ask Tal
     @BindView(R.id.EditTextUserName)
     EditText editTextUserName;
     @BindView(R.id.EditTextPassword)

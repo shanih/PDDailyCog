@@ -62,6 +62,12 @@ public class Chore implements Serializable {
 
     private long textInputTotalTime;
 
+    private long instructionTotalSteps;
+
+    private long takePictureTotalSteps;
+
+    private long textInputTotalSteps;
+
     private long textInputTimeBeforeFstChar;
 
     private int addedCharactersNum;
@@ -169,6 +175,36 @@ public class Chore implements Serializable {
     }
     public void setTextInputTotalTime(long textInputTotalTime) {
         this.textInputTotalTime = textInputTotalTime;
+    }
+
+    public void addStepToInstructionTotalSteps(long stepsToAdd){
+        this.instructionTotalSteps = this.instructionTotalSteps+stepsToAdd;
+    }
+    public long getInstructionTotalSteps() {
+        return instructionTotalSteps;
+    }
+    public void setInstructionTotalSteps(long instructionTotalSteps) {
+        this.instructionTotalSteps = instructionTotalSteps;
+    }
+
+    public void addStepsToTakePictureTotalSteps(long stepsToAdd){
+        this.takePictureTotalSteps=this.takePictureTotalSteps+stepsToAdd;
+    }
+    public long getTakePictureTotalSteps() {
+        return takePictureTotalSteps;
+    }
+    public void setTakePictureTotalSteps(long takePictureTotalSteps) {
+        this.takePictureTotalSteps = takePictureTotalSteps;
+    }
+
+    public void addStepsToTextInputTotalSteps(long stepsToAdd) {
+        this.textInputTotalSteps=this.textInputTotalSteps+stepsToAdd;
+    }
+    public long getTextInputTotalSteps() {
+        return textInputTotalSteps;
+    }
+    public void setTextInputTotalSteps(long textInputTotalSteps) {
+        this.textInputTotalSteps = textInputTotalSteps;
     }
 
     public void addTimeToTextInputTimeBeforeFstChar(long timeToAdd) {

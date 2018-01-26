@@ -16,9 +16,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.utils.stepdetector.StepDetector;
-import il.ac.pddailycogresearch.pddailycog.utils.stepdetector.StepDetector2;
-import il.ac.pddailycogresearch.pddailycog.utils.stepdetector.StepListener;
+import il.ac.pddailycogresearch.pddailycog.stepdetector.StepDetector;
+import il.ac.pddailycogresearch.pddailycog.stepdetector.StepDetector2;
+import il.ac.pddailycogresearch.pddailycog.stepdetector.StepListener;
 
 /**
  * Created by User on 24/01/2018.

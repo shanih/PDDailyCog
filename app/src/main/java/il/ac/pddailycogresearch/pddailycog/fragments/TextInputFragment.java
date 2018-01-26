@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
-import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,12 +67,13 @@ public class TextInputFragment extends Fragment {
     public void onStop() {
         super.onStop();
         calcTime();
-        mListener.onTextInputFragmentDetach(timeBeforeCharacter);
+        mListener.onTextInputFragmentStop(timeBeforeCharacter);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener.onTextInputFragmentDetach();
         mListener = null;
     }
 
@@ -103,6 +103,7 @@ public class TextInputFragment extends Fragment {
         void onTextInputFragmentCreateView();
         void onCharacterAdded(String inputText, long timeBeforeCharacter);
         void onCharacterDeleted(String inputText);
-        void onTextInputFragmentDetach(long timeBeforeCharacter);
+        void onTextInputFragmentStop(long timeBeforeCharacter);
+        void onTextInputFragmentDetach();
     }
 }

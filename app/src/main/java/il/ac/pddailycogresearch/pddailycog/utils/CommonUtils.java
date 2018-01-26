@@ -60,9 +60,9 @@ public final class CommonUtils {
 
     public static void closeApp(Activity activity) {
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN)
-            activity.finishAffinity();//ask Tal
+            activity.finishAffinity();
         else
-            activity.finish();//TODO
+            activity.finish();//TODO ask Tal
     }
 
     public static boolean isAirplaneMode(Context context) {

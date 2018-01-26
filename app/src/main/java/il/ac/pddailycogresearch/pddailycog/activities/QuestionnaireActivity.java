@@ -1,8 +1,10 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -11,7 +13,6 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseException;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +27,8 @@ import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
+    public static String TAG = QuestionnaireActivity.class.getSimpleName();
+
     @BindView(R.id.textViewQuestionnaireQuest)
     TextView textViewQuestionnaireQuest;
     @BindView(R.id.radioGroupQuestionnaireAns)
@@ -36,8 +39,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private FirebaseIO firebaseIO = FirebaseIO.getInstance();
 
     private int questionIdx = 0;
-    private final int[] ANSWERS_IDS = {R.array.answers_1, R.array.answers_2, R.array.answers_3,
-            R.array.answers_4, R.array.answers_5, R.array.answers_6}; //TODO find a way to add without code
+    private int[] answers_ids;
     private String[] questions;
     private Integer[] answers;
 
@@ -72,6 +74,18 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     private void init() {
 
+        TypedArray ta= getResources().obtainTypedArray(R.array.answers_id);
+        int n = ta.length();
+        answers_ids = new int[n];
+        for (int i = 0; i < n; ++i) {
+            int id = ta.getResourceId(i, 0);
+            if (id > 0) {
+                answers_ids[i] = id;
+            } else {
+                Log.e(TAG,"answers xml error");
+                CommonUtils.showMessage(this,R.string.answers_xml_error);
+            }
+        }
         questions = getResources().getStringArray(R.array.questions);
         radioButtonsListener = new View.OnClickListener() {
             @Override
@@ -94,7 +108,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
 
     private void setCurrentQuestion() {
         textViewQuestionnaireQuest.setText(CommonUtils.fromHtml(questions[questionIdx]));
-        String[] answersTexts = getResources().getStringArray(ANSWERS_IDS[questionIdx]);
+        String[] answersTexts = getResources().getStringArray(answers_ids[questionIdx]);
         radioGroupQuestionnaireAns.removeAllViews();
         for (String answer : answersTexts) {
             RadioButton rb = new RadioButton(this);

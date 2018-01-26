@@ -1,4 +1,4 @@
-package il.ac.pddailycogresearch.pddailycog.utils.stepdetector;
+package il.ac.pddailycogresearch.pddailycog.stepdetector;
 
 /**
  * Created by User on 24/01/2018.

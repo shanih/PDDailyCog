@@ -1,7 +1,8 @@
-package il.ac.pddailycogresearch.pddailycog.utils.stepdetector;
+package il.ac.pddailycogresearch.pddailycog.stepdetector;
 
 /**
  * Created by User on 25/01/2018.
+ * taken from https://github.com/bagilevi/android-pedometer/blob/master/src/name/bagi/levente/pedometer/StepService.java
  */
 import java.util.ArrayList;
 

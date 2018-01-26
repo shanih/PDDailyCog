@@ -38,7 +38,9 @@ public class RatingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rating, container, false);
         unbinder = ButterKnife.bind(this, view);
+        mListener.onRatingFragmentCraeteView();
         initViews();
+
         return view;
     }
 
@@ -58,7 +60,7 @@ public class RatingFragment extends Fragment {
             rb.setText(String.valueOf(i));
             rb.setOnClickListener(radioButtonsListener);
             radioGroupRatingFragment.addView(rb);
-            if (i == selection - 1)
+            if (i == selection)
                 radioGroupRatingFragment.check(rb.getId());
         }
         radioGroupRatingFragment.setOrientation(LinearLayout.HORIZONTAL);
@@ -70,7 +72,6 @@ public class RatingFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-            mListener.onRatingFragmentAttach();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -106,7 +107,7 @@ public class RatingFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        void onRatingFragmentAttach();
+        void onRatingFragmentCraeteView();
 
         void onRatingChanged(int rating);
     }

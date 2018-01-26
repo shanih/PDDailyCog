@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <array name="answers_id">
+        <item>@array/answers_1</item>
+        <item>@array/answers_2</item>
+        <item>@array/answers_3</item>
+        <item>@array/answers_4</item>
+        <item>@array/answers_5</item>
+        <item>@array/answers_6</item>
+    </array>
     <string-array name="answers_1">
         <item>מצוינת</item>
         <item>טובה מאוד</item>

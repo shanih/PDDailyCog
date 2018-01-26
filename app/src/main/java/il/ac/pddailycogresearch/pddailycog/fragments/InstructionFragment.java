@@ -45,7 +45,16 @@ public class InstructionFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_instruction, container, false);
         unbinder = ButterKnife.bind(this, view);
+        initViews();
         return view;
+    }
+
+    private void initViews() {
+        if (mpori==null||!mpori.isPlaying()) {
+            buttonInstructionFragmentSound.setText(R.string.sound);
+        } else {
+            buttonInstructionFragmentSound.setText(R.string.stop);
+        }
     }
 
 
@@ -77,7 +86,7 @@ public class InstructionFragment extends Fragment {
     @OnClick(R.id.buttonInstructionFragmentSound)
     public void onViewClicked() {
         if (mpori==null||!mpori.isPlaying()) {
-            mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.cog_trial);
+            mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.trial_instrc_male_sound);
             mpori.start();
             buttonInstructionFragmentSound.setText(R.string.stop);
         } else {

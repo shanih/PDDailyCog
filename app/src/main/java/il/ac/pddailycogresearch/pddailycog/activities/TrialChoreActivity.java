@@ -28,6 +28,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
+import il.ac.pddailycogresearch.pddailycog.stepdetector.StepCounter;
 
 public class TrialChoreActivity extends AppCompatActivity implements
         TakePictureFragment.OnFragmentInteractionListener,
@@ -47,7 +48,9 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     private Chore currentChore;
     private FirebaseIO firebaseIO = FirebaseIO.getInstance();
+    private StepCounter stepCounter = StepCounter.getInstance();
     private long startCurrentViewedPartTime;
+    private long startCurrentViewPartStepsNum=-1;
     private boolean isInstructionClicked;//TODO put in save instance
 
 
@@ -56,6 +59,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trial_chore);
         ButterKnife.bind(this);
+        stepCounter.registerSensors(this);
         initMembers();
     }
 
@@ -70,13 +74,21 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+        stepCounter.registerSensors(this);
         startCurrentViewedPartTime = System.currentTimeMillis();
+        startCurrentViewPartStepsNum = stepCounter.getStepsNum();
     }
 
     @Override
     protected void onStop() {
         terminateChore();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stepCounter.unregisterSensors();
     }
 
     private void initChore() {
@@ -122,7 +134,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
                 break;
             case R.id.buttonTrialChoreInstruction:
                 this.isInstructionClicked = true;
-                updateTiming(currentChore.getCurrentPartNum());
+                updateTimingAndSteps(currentChore.getCurrentPartNum());
                 currentChore.increaseInstrcClicksNum();
                 replaceFragment(Chore.PartsConstants.INSTRUCTION);
                 break;
@@ -136,16 +148,16 @@ public class TrialChoreActivity extends AppCompatActivity implements
     private void replaceFragment(int nextPart) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutTrialFragmentContainer, partsFragments.get(nextPart - 1));
-        //   transaction.addToBackStack(null);//TODO decide if its right
+        //   transaction.addToBackStack(null); //we block back so this is useless
         transaction.commit();
     }
 
     private void moveToNextPart() {
         if (this.isInstructionClicked) {
             this.isInstructionClicked = false;
-            updateTiming(Chore.PartsConstants.INSTRUCTION);
+            updateTimingAndSteps(Chore.PartsConstants.INSTRUCTION);
         } else {
-            updateTiming(currentChore.getCurrentPartNum());
+            updateTimingAndSteps(currentChore.getCurrentPartNum());
             int nextPart = currentChore.getCurrentPartNum() + 1;
             if (nextPart <= Chore.PartsConstants.PARTS_AMOUNT)
                 currentChore.setCurrentPartNum(nextPart);
@@ -169,21 +181,26 @@ public class TrialChoreActivity extends AppCompatActivity implements
                 });
     }
 
-    private void updateTiming(Integer partEnded) {
+    private void updateTimingAndSteps(Integer partEnded) {
         if (this.startCurrentViewedPartTime != 0) {
             long timeElapsed = System.currentTimeMillis() - this.startCurrentViewedPartTime;
+            long stepsSinceStart = stepCounter.getStepsNum()-startCurrentViewPartStepsNum;
             switch (partEnded) {
                 case Chore.PartsConstants.INSTRUCTION:
                     currentChore.addTimeToInstructionTotalTime(timeElapsed);
+                    currentChore.addStepToInstructionTotalSteps(stepsSinceStart);
                     break;
                 case Chore.PartsConstants.TAKE_PICTURE:
                     currentChore.addTimeToTakePictureTotalTime(timeElapsed);
+                    currentChore.addStepsToTakePictureTotalSteps(stepsSinceStart);
                     break;
                 case Chore.PartsConstants.TEXT_INPUT:
                     currentChore.addTimeToTextInputTotalTime(timeElapsed);
+                    currentChore.addStepsToTextInputTotalSteps(stepsSinceStart);
                     break;
             }
         }
+        this.startCurrentViewPartStepsNum = stepCounter.getStepsNum();
         this.startCurrentViewedPartTime = System.currentTimeMillis();
     }
 
@@ -197,9 +214,9 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     private void terminateChore() {
         if (isInstructionClicked)
-            updateTiming(Chore.PartsConstants.INSTRUCTION);
+            updateTimingAndSteps(Chore.PartsConstants.INSTRUCTION);
         else
-            updateTiming(currentChore.getCurrentPartNum());
+            updateTimingAndSteps(currentChore.getCurrentPartNum());
         firebaseIO.saveChore(currentChore);
     }
 
@@ -279,17 +296,21 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onTextInputFragmentDetach(long timeBeforeCharacter) {
-        //     buttonTrialChoreOk.setEnabled(true);
+    public void onTextInputFragmentStop(long timeBeforeCharacter) {
         if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
 
     }
 
+    @Override
+    public void onTextInputFragmentDetach() {
+        buttonTrialChoreOk.setEnabled(true);
+    }
+
 
     //rating fragment callback
     @Override
-    public void onRatingFragmentAttach() {
+    public void onRatingFragmentCraeteView() {
         if (currentChore.getResultRating() == 0)
             buttonTrialChoreOk.setEnabled(false);
         else {
