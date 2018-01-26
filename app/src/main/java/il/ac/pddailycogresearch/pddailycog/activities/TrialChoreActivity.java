@@ -115,10 +115,10 @@ RatingFragment.OnFragmentInteractionListener{
     }
 
 
-    @OnClick({R.id.buttonTrialChoreExit, R.id.buttonTrialChoreOk, R.id.buttonTrialChoreInstruction})
+    @OnClick({R.id.buttonTrialChoreOk, R.id.buttonTrialChoreInstruction,R.id.buttonExit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.buttonTrialChoreExit:
+                        case R.id.buttonExit:
                 showExitAlertDialog();
                 break;
             case R.id.buttonTrialChoreInstruction:
