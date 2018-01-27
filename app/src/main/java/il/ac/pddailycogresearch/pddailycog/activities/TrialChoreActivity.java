@@ -1,5 +1,6 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
         TakePictureFragment.OnFragmentInteractionListener,
         InstructionFragment.OnFragmentInteractionListener,
         TextInputFragment.OnFragmentInteractionListener,
-RatingFragment.OnFragmentInteractionListener{
+        RatingFragment.OnFragmentInteractionListener {
 
     private static final String TAG = TrialChoreActivity.class.getSimpleName();
 
@@ -121,10 +123,10 @@ RatingFragment.OnFragmentInteractionListener{
     }
 
 
-    @OnClick({R.id.buttonTrialChoreOk, R.id.buttonTrialChoreInstruction,R.id.buttonExit, R.id.button_sound})
+    @OnClick({R.id.buttonTrialChoreOk, R.id.buttonTrialChoreInstruction, R.id.buttonExit, R.id.button_sound})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-                        case R.id.buttonExit:
+            case R.id.buttonExit:
                 showExitAlertDialog();
                 break;
             case R.id.buttonTrialChoreInstruction:
@@ -139,7 +141,6 @@ RatingFragment.OnFragmentInteractionListener{
                 mpori.start();
                 onSoundButtonClick();
                 break;
-
 
 
             case R.id.buttonTrialChoreOk:
@@ -157,14 +158,20 @@ RatingFragment.OnFragmentInteractionListener{
     }
 
     private void moveToNextPart() {
+
         if (this.isInstructionClicked) {
             this.isInstructionClicked = false;
             updateTiming(Chore.PartsConstants.INSTRUCTION);
         } else {
             updateTiming(currentChore.getCurrentPartNum());
             int nextPart = currentChore.getCurrentPartNum() + 1;
-            if (nextPart <= Chore.PartsConstants.PARTS_AMOUNT)
+            if (nextPart <= Chore.PartsConstants.PARTS_AMOUNT) {
                 currentChore.setCurrentPartNum(nextPart);
+                if (nextPart==Chore.PartsConstants.PARTS_AMOUNT){
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                }
+            }
             else
                 finishChore();
         }
@@ -179,7 +186,7 @@ RatingFragment.OnFragmentInteractionListener{
                         if (result) {
                             terminateChore();
                             DialogUtils.createTurnOffAirplaneModeAlertDialog(TrialChoreActivity.this);
-                           // finish();
+                            // finish();
                         }
                     }
                 });
@@ -206,14 +213,14 @@ RatingFragment.OnFragmentInteractionListener{
     private void finishChore() {
         currentChore.setCompleted(true);
         terminateChore();
-       // DialogUtils.createGoodbyeDialog(this);
+        // DialogUtils.createGoodbyeDialog(this);
         startActivity(new Intent(TrialChoreActivity.this, GoodByeActivity.class));
 
     }
 
-    private void terminateChore(){
-       if(isInstructionClicked)
-           updateTiming(Chore.PartsConstants.INSTRUCTION);
+    private void terminateChore() {
+        if (isInstructionClicked)
+            updateTiming(Chore.PartsConstants.INSTRUCTION);
         else
             updateTiming(currentChore.getCurrentPartNum());
         firebaseIO.saveChore(currentChore);
@@ -255,9 +262,8 @@ RatingFragment.OnFragmentInteractionListener{
             buttonTrialChoreOk.setEnabled(false);
 
             buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
-        }
-        else
-            ((TakePictureFragment)partsFragments.get(Chore.PartsConstants.TAKE_PICTURE-1))
+        } else
+            ((TakePictureFragment) partsFragments.get(Chore.PartsConstants.TAKE_PICTURE - 1))
                     .setLastTakenImageToView();
     }
 
@@ -282,7 +288,7 @@ RatingFragment.OnFragmentInteractionListener{
         buttonTrialChoreOk.setEnabled(true);
 
         buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
-        if(currentChore.getAddedCharactersNum()==0)
+        if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
         currentChore.increaseAddedCharacters();
         currentChore.setResultText(inputText);
@@ -290,7 +296,7 @@ RatingFragment.OnFragmentInteractionListener{
 
     @Override
     public void onCharacterDeleted(String inputText) {
-        if(inputText.isEmpty())
+        if (inputText.isEmpty())
             buttonTrialChoreOk.setEnabled(false);
 
         buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
@@ -303,7 +309,7 @@ RatingFragment.OnFragmentInteractionListener{
         buttonTrialChoreOk.setEnabled(true);
 
         buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
-        if(currentChore.getAddedCharactersNum()==0)
+        if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
 
     }

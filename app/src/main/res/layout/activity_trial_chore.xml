@@ -57,14 +57,20 @@
         <!--android:layout_alignParentRight="true"             />-->
 
     </RelativeLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 
-
+    android:layout_below="@id/relativeLayoutUp"
+    android:fillViewport="true">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <FrameLayout
         android:id="@+id/frameLayoutTrialFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/relativeLayoutButtom"
-        android:layout_below="@id/relativeLayoutUp"
         android:layout_centerInParent="true">
 
 
@@ -84,4 +90,6 @@
 
             android:text="@string/ok" />
     </RelativeLayout>
+</RelativeLayout>
+</ScrollView>
 </RelativeLayout>

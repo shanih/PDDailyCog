@@ -12,7 +12,7 @@ public class Consts {
     public static final String CHORES_KEY = "chores";
     public static final String LOCAL_URI_PREFIX = "content";
     public static final String TIMESTAMP_FORMAT = "dd-MM-yyyy_HH-mm-ss";
-    public static final Double IMAGEVIEW_HEIGHT_PERCENTAGE = 0.60;
+    public static final Double IMAGEVIEW_HEIGHT_PERCENTAGE = 0.30;
     public static final int CHORES_AMOUNT = 1;
 
     public static final String QUESTIONNAIRE_KEY = "questionnaire";

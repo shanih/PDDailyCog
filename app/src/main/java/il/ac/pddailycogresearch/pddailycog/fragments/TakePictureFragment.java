@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 
@@ -46,6 +47,8 @@ public class TakePictureFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private String imgAbsolutePath;
     private Uri imgUri;
+    private static int imageViewHeight;
+    private static int imageViewWidth;
 
 
     public TakePictureFragment() {
@@ -61,18 +64,23 @@ public class TakePictureFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListener.onTakePictureFragmentViewCreated();
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                mListener.onTakePictureFragmentViewCreated();
+                imageViewHeight=imageViewTakePictureFragment.getHeight();
+                imageViewWidth = imageViewTakePictureFragment.getWidth();
+            }
+        });
+
 
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -101,7 +109,7 @@ public class TakePictureFragment extends Fragment {
 
     @OnClick(R.id.buttonTakePictureFragment)
     public void onViewClicked() {
-      //  mListener.onTakePictureFragmentViewCreated();
+        //  mListener.onTakePictureFragmentViewCreated();
         dispatchTakePictureIntent(imageViewTakePictureFragment);
     }
 
@@ -121,15 +129,15 @@ public class TakePictureFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 setImageToView(imgAbsolutePath);
                 mListener.onPictureBeenTaken(imgUri.toString());
-            } else
-                imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
+            } //else
+              //  imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
 
         }
     }
 
     //let the activity put image from its data
-    public void setLastTakenImageToView(){
-        if(ImageUtils.lastTakenImageAbsolutePath!=null) {
+    public void setLastTakenImageToView() {
+        if (ImageUtils.lastTakenImageAbsolutePath != null) {
             setImageToView(ImageUtils.lastTakenImageAbsolutePath);
         }
     }
@@ -140,8 +148,9 @@ public class TakePictureFragment extends Fragment {
         int screenHeight = metrics.heightPixels;
         int imageHeight = (int) Math.round(screenHeight * Consts.IMAGEVIEW_HEIGHT_PERCENTAGE);
         int imageWidth = metrics.widthPixels;
-               imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
-        ImageUtils.setPic(imageViewTakePictureFragment, absolutePath, imageHeight, imageWidth);
+     //   imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
+        ImageUtils.setPic(imageViewTakePictureFragment, absolutePath, imageViewHeight, imageViewWidth);
+
         buttonTakePictureFragment.setText(R.string.re_take_picture);
     }
 
@@ -158,7 +167,9 @@ public class TakePictureFragment extends Fragment {
     public interface OnFragmentInteractionListener {
 
         void onPictureBeenTaken(String imgUri);
+
         void onTakePictureFragmentViewCreated();
+
         void onTakePictureFragmentDetach();
     }
 }

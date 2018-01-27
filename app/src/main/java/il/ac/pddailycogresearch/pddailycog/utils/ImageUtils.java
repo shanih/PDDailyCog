@@ -69,6 +69,8 @@ public final class ImageUtils {
 
     public static void setPic(ImageView mImageView, String mCurrentPhotoPath, int targetH, int targetW) {
 
+       // targetH = mImageView.getMeasuredHeight();//.getHeight();
+       // targetW = mImageView.getMeasuredWidth();//.getWidth();
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
@@ -81,7 +83,7 @@ public final class ImageUtils {
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = 150;
+        bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
