@@ -24,8 +24,8 @@ import il.ac.pddailycogresearch.pddailycog.R;
  */
 public class InstructionFragment extends Fragment {
     Unbinder unbinder;
-    @BindView(R.id.buttonInstructionFragmentSound)
-    Button buttonInstructionFragmentSound;
+   /* @BindView(R.id.buttonInstructionFragmentSound)
+    Button buttonInstructionFragmentSound;*/
 
     private OnFragmentInteractionListener mListener;
     private MediaPlayer mpori;
@@ -50,11 +50,11 @@ public class InstructionFragment extends Fragment {
     }
 
     private void initViews() {
-        if (mpori==null||!mpori.isPlaying()) {
+       /* if (mpori==null||!mpori.isPlaying()) {
             buttonInstructionFragmentSound.setText(R.string.sound);
         } else {
             buttonInstructionFragmentSound.setText(R.string.stop);
-        }
+        }*/
     }
 
 
@@ -83,7 +83,7 @@ public class InstructionFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.buttonInstructionFragmentSound)
+  /*  @OnClick(R.id.buttonInstructionFragmentSound)
     public void onViewClicked() {
         if (mpori==null||!mpori.isPlaying()) {
             mpori = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.trial_instrc_male_sound);
@@ -96,7 +96,7 @@ public class InstructionFragment extends Fragment {
         }
 
         mListener.onSoundButtonClick();
-    }
+    }*/
 
     /**
      * This interface must be implemented by activities that contain this

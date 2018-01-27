@@ -57,7 +57,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     private FirebaseIO firebaseIO = FirebaseIO.getInstance();
     private StepCounter stepCounter = StepCounter.getInstance();
     private long startCurrentViewedPartTime;
-    private long startCurrentViewPartStepsNum=-1;
+    private long startCurrentViewPartStepsNum = -1;
     private boolean isInstructionClicked;//TODO put in save instance
 
 
@@ -178,12 +178,11 @@ public class TrialChoreActivity extends AppCompatActivity implements
             int nextPart = currentChore.getCurrentPartNum() + 1;
             if (nextPart <= Chore.PartsConstants.PARTS_AMOUNT) {
                 currentChore.setCurrentPartNum(nextPart);
-                if (nextPart==Chore.PartsConstants.PARTS_AMOUNT){
+                if (nextPart == Chore.PartsConstants.PARTS_AMOUNT) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 }
-            }
-            else
+            } else
                 finishChore();
         }
     }
@@ -206,7 +205,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     private void updateTimingAndSteps(Integer partEnded) {
         if (this.startCurrentViewedPartTime != 0) {
             long timeElapsed = System.currentTimeMillis() - this.startCurrentViewedPartTime;
-            long stepsSinceStart = stepCounter.getStepsNum()-startCurrentViewPartStepsNum;
+            long stepsSinceStart = stepCounter.getStepsNum() - startCurrentViewPartStepsNum;
             switch (partEnded) {
                 case Chore.PartsConstants.INSTRUCTION:
                     currentChore.addTimeToInstructionTotalTime(timeElapsed);
@@ -282,11 +281,9 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onTakePictureFragmentViewCreated() {
         if (ImageUtils.lastTakenImageAbsolutePath == null) {
             buttonTrialChoreOk.setEnabled(false);
-        else
-            ((TakePictureFragment) partsFragments.get(Chore.PartsConstants.TAKE_PICTURE - 1))
-
             buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
-        } else
+        }
+        else
             ((TakePictureFragment) partsFragments.get(Chore.PartsConstants.TAKE_PICTURE - 1))
                     .setLastTakenImageToView();
     }
@@ -294,7 +291,6 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onTakePictureFragmentDetach() {
         buttonTrialChoreOk.setEnabled(true);
-
         buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
     }
 
@@ -302,20 +298,18 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     @Override
     public void onTextInputFragmentCreateView() {
-        if (currentChore.getResultText() == null || currentChore.getResultText().isEmpty())
+        if (currentChore.getResultText() == null || currentChore.getResultText().isEmpty()) {
             buttonTrialChoreOk.setEnabled(false);
-        else
+            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+        } else {
             ((TextInputFragment) partsFragments.get(Chore.PartsConstants.TEXT_INPUT - 1))
                     .setTextToEditText(currentChore.getResultText());
-        buttonTrialChoreOk.setEnabled(false);
-
-        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+        }
     }
 
     @Override
     public void onCharacterAdded(String inputText, long timeBeforeCharacter) {
         buttonTrialChoreOk.setEnabled(true);
-
         buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
 
         if (currentChore.getAddedCharactersNum() == 0)
@@ -326,18 +320,17 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     @Override
     public void onCharacterDeleted(String inputText) {
-        if(inputText.isEmpty())
+        if (inputText.isEmpty()) {
             buttonTrialChoreOk.setEnabled(false);
-
-        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+        }
         currentChore.increaseDeletedCharaters();
         currentChore.setResultText(inputText);
     }
 
     @Override
-    public void onTextInputFragmentDetach(long timeBeforeCharacter) {
+    public void onTextInputFragmentStop(long timeBeforeCharacter) {
         buttonTrialChoreOk.setEnabled(true);
-
         buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
         if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
@@ -347,18 +340,21 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onTextInputFragmentDetach() {
         buttonTrialChoreOk.setEnabled(true);
+        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
     }
 
 
     //rating fragment callback
     @Override
     public void onRatingFragmentCraeteView() {
-        if (currentChore.getResultRating() == 0)
+        if (currentChore.getResultRating() == 0) {
             buttonTrialChoreOk.setEnabled(false);
-        else {
+            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+        } else {
             ((RatingFragment) partsFragments.get(Chore.PartsConstants.RATING - 1))
                     .setRatingSelection(currentChore.getResultRating());
             buttonTrialChoreOk.setEnabled(true);
+            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
         }
     }
 
@@ -366,6 +362,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onRatingChanged(int rating) {
         currentChore.setResultRating(rating);
         buttonTrialChoreOk.setEnabled(true);
+        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
     }
     //endregion
 }
