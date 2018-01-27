@@ -1,32 +1,62 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.RatingFragment">
 
     <TextView
+        android:id="@+id/textViewHowWell"
+        style="@style/StyleTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/rating_question" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/not_well"/>
-        <RadioGroup
-            android:id="@+id/radioGroupRatingFragment"
+        android:layout_below="@id/textViewHowWell">
+
+        <RelativeLayout
+            android:id="@+id/layoutRadio"
+            style="@style/StyleLayuot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-        </RadioGroup>
-        <TextView
+            <RadioGroup
+                android:id="@+id/radioGroupRatingFragment"
+                style="@style/StyleRadioButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15sp">
+
+            </RadioGroup>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/extremely_well"/>
-    </LinearLayout>
+            android:layout_below="@id/layoutRadio"
+            android:layout_marginRight="70dp"
+            android:layout_marginLeft="100dp">
+
+            <TextView
+                style="@style/StyleTextRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/not_well"
+                android:textSize="15dp" />
+
+
+            <TextView
+                style="@style/StyleTextRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/extremely_well"
+
+                android:textSize="15dp" />
+        </RelativeLayout>
+    </RelativeLayout>
 </LinearLayout>

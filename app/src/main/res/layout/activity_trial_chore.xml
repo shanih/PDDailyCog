@@ -1,47 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity">
 
     <RelativeLayout
-        android:id="@+id/relativeLayoutTrialHeader"
+        android:id="@+id/relativeLayoutUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:orientation="horizontal">
+
 
         <Button
             android:id="@+id/buttonTrialChoreInstruction"
+            style="@style/StyleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:text="@string/instructions" />
 
-        <Button
-            android:id="@+id/buttonTrialChoreExit"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/button_sound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="15dp"
+            android:src="@drawable/sound_icon"
+            app:backgroundTint="@color/colorButtons"
+            app:fabSize="normal" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/buttonExit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="exit" />
+            android:layout_centerVertical="true"
+            android:layout_margin="15dp"
+            android:src="@drawable/exit_ic"
+            app:backgroundTint="@color/colorButtons"
+            app:fabSize="normal" />
+
+        <!--<Button style="@style/StyleButton"-->
+        <!--android:id="@+id/buttonTrialChoreExit"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:background="@drawable/exit"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentRight="true"             />-->
 
     </RelativeLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 
+    android:layout_below="@id/relativeLayoutUp"
+    android:fillViewport="true">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <FrameLayout
         android:id="@+id/frameLayoutTrialFragmentContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayoutTrialHeader">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/relativeLayoutButtom"
+        android:layout_centerInParent="true">
+
 
     </FrameLayout>
 
-    <Button
-        android:id="@+id/buttonTrialChoreOk"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/relativeLayoutButtom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/frameLayoutTrialFragmentContainer"
-        android:text="@string/ok" />
+        android:layout_alignParentBottom="true">
 
+        <Button
+            android:id="@+id/buttonTrialChoreOk"
+            style="@style/StyleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/ok" />
+    </RelativeLayout>
+</RelativeLayout>
+</ScrollView>
 </RelativeLayout>

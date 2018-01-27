@@ -2,6 +2,7 @@ package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -91,6 +92,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonQuestionnaireOK.setEnabled(true);
+                buttonQuestionnaireOK.setBackgroundColor(getResources().getColor(R.color.colorButtons));
                 int ansIdx = radioGroupQuestionnaireAns.indexOfChild(v);
                 answers[questionIdx] = ansIdx;
 
@@ -122,6 +124,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
             buttonQuestionnaireOK.setEnabled(true);
         } else
             buttonQuestionnaireOK.setEnabled(false);
+        buttonQuestionnaireOK.setBackgroundColor(getResources().getColor(R.color.semi_gray));
 
     }
 
@@ -130,8 +133,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         saveAnswer();
         if (++questionIdx < questions.length) {
             setCurrentQuestion();
-        }
-        else
+        } else
             startActivity(new Intent(this, GoodByeActivity.class));
     }
 

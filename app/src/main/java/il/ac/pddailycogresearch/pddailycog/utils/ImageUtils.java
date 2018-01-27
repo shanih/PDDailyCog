@@ -69,6 +69,8 @@ public final class ImageUtils {
 
     public static void setPic(ImageView mImageView, String mCurrentPhotoPath, int targetH, int targetW) {
 
+       // targetH = mImageView.getMeasuredHeight();//.getHeight();
+       // targetW = mImageView.getMeasuredWidth();//.getWidth();
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;

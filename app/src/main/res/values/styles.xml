@@ -6,6 +6,81 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonStyle">@style/StyleButton</item>
+    </style>
+
+    <!-- Our application theme. -->
+    <style name="OurApp" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorToolbar</item>
+        <item name="colorAccent">@color/colorRadioButton</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="StyleButton" parent="android:Theme">
+        <item name="android:background">@color/colorButtons</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">20dp</item>
+
+    </style>
+
+    <!-- EditText -->
+    <style name="StyleEditText" parent="android:Theme">
+        <item name="android:background">@drawable/rounded_corner</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <!-- TextView -->
+    <style name="StyleTextView" parent="android:Theme">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:radius">100dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:background">@drawable/rounded_corner</item>
+    </style>
+
+    <!-- TextView -->
+    <style name="StyleTextRadioButton" parent="android:Theme">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">italic</item>m>
+    </style>
+
+    <!-- Layout -->
+    <style name="StyleLayuot" parent="android:Theme">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <!-- RadioButton -->
+    <style name="StyleRadioButton" parent="android:Theme">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">70sp</item>
+        <item name="android:width">60dp</item>
+        <item name="android:height">60dp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
 </resources>

@@ -7,7 +7,7 @@
     <string name="sign_in">היכנס</string>
 
     <string name="ok">אישור</string>
-    <string name="welcome_text">ברוך הבא, אתה אמור לעשות משימות</string>
+    <string name="welcome_text">לפניך מספר הנחיות שהנך מתבקש לבצע. אנא עקוב אחר ההוראות, באפשרותך לשמוע את ההנחיות על ידי לחיצה על סימן הרמקול. מרגע שתלחץ על \"אישור\", ההנחיה תעלם מהמסך אך תוכל לחזור ולהקשיב להוראות שוב</string>
     <string name="open_settings">פתח הגדרות מצב טיסה</string>
     <string name="airplane_mode_request">אנא הכנס את המכשיר למצב טיסה</string>
     <string name="error_not_in_airplane_mode">המכשיר אינו במצב טיסה</string>
@@ -34,7 +34,7 @@
     <string name="re_take_picture">צלם מחדש</string>
     <string name="enter_text_input_hint">הכנס משימת טקסט</string>
     <string name="sound">השמע</string>
-    <string name="trail_chore_instruction">קח את הטלפון וכוס מהמטבח, לך לחדר השינה, מקם את הכוס על כיסא או מדף בחדר השינה (צלם).  הקלד בטלפון התאריך והשעה ואז שם מלא (שם ושם משפחה) של אמא שלך</string>
+    <string name="trail_chore_instruction">קח את הטלפון וכוס מהמטבח, לך לחדר השינה, מקם את הכוס על כיסא או מדף בחדר השינה (צלם). הקלד בטלפון התאריך והשעה ואז שם מלא (שם ושם משפחה) של אמא שלך</string>
     <string name="reminder">תזכורת</string>
     <string name="turn_off_airplane_mode_alert_msg">מומלץ לכבות את מצב הטיסה בעת עזיבת האפליקציה</string>
     <string name="close">סגור</string>
@@ -47,6 +47,10 @@
     <string name="error_in_airplane_mode">לא בוצעה יציאה ממצב טיסה</string>
     <string name="close_airplane_mode">סגור מצב טיסה לפני יציאתך</string>
     <string name="open_questionnaire">פתח שאלון</string>
+    <string name="continue_">המשך</string>
+
+
+    <string name="before_instr">לפניך מספר הנחיות שהנך מתבקש לבצע. אנא עקוב אחר ההוראות. באפשרותך לשמוע את ההנחיות על ידי לחיצה על סימן הרמקול. מרגע שתלחץ על "בצע", ההנחיה תעלם מהמסך אך תוכל לחזור לקרוא אותה שוב.</string>
     <string name="stop">הפסק</string>
     <string name="answers_xml_error">אירעה שגיאה בתצורת התשובות לשאלון</string>
 

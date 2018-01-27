@@ -5,20 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.QuestionnaireActivity">
+   <RelativeLayout
+       style="@style/StyleLayuot">
     <TextView
+        style="@style/StyleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewQuestionnaireQuest"/>
 
     <RadioGroup
+        style="@style/StyleRadioButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textViewQuestionnaireQuest"
         android:id="@+id/radioGroupQuestionnaireAns" />
 
     <Button
+        style="@style/StyleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonQuestionnaireOK"
+        android:layout_below="@+id/radioGroupQuestionnaireAns"
         android:text="@string/ok"/>
-
+   </RelativeLayout>
 </LinearLayout>
