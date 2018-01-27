@@ -10,6 +10,7 @@ import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 //remote design
+//wtf
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseIO mFirebaseIO = FirebaseIO.getInstance();
