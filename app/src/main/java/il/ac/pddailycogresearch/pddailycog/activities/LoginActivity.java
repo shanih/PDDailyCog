@@ -18,6 +18,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 
 //remote stupid
+//wtf
 public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.EditTextUserName)
     EditText editTextUserName;
