@@ -53,6 +53,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     FloatingActionButton button_sound;
 
     ArrayList<Fragment> partsFragments = new ArrayList<>();
+    MediaPlayer mpori;
 
     private Chore currentChore;
     private FirebaseIO firebaseIO = FirebaseIO.getInstance();
@@ -86,6 +87,8 @@ public class TrialChoreActivity extends AppCompatActivity implements
         stepCounter.registerSensors(this);
         startCurrentViewedPartTime = System.currentTimeMillis();
         startCurrentViewPartStepsNum = stepCounter.getStepsNum();
+        InputMethodManager imm = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     @Override
@@ -148,13 +151,10 @@ public class TrialChoreActivity extends AppCompatActivity implements
                 replaceFragment(Chore.PartsConstants.INSTRUCTION);
                 break;
             case R.id.button_sound:
-                MediaPlayer mpori;
                 mpori = MediaPlayer.create(getApplicationContext(), R.raw.temp_audio_instr);
                 mpori.start();
                 onSoundButtonClick();
                 break;
-
-
             case R.id.buttonTrialChoreOk:
                 moveToNextPart();
                 replaceFragment(currentChore.getCurrentPartNum());
@@ -179,10 +179,6 @@ public class TrialChoreActivity extends AppCompatActivity implements
             int nextPart = currentChore.getCurrentPartNum() + 1;
             if (nextPart <= Chore.PartsConstants.PARTS_AMOUNT) {
                 currentChore.setCurrentPartNum(nextPart);
-                if (nextPart == Chore.PartsConstants.PARTS_AMOUNT) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                }
             } else
                 finishChore();
         }
@@ -266,6 +262,9 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onInstructionFragmentDetach() {
         buttonTrialChoreInstruction.setVisibility(View.VISIBLE);
         button_sound.setVisibility(View.GONE);
+        if (mpori!=null){
+            mpori.stop();
+        }
     }
 
     //takePictureFragment callback

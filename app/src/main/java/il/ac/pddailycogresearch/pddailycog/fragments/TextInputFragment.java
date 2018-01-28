@@ -49,7 +49,7 @@ public class TextInputFragment extends Fragment {
         return view;
     }
 
-    public void setTextToEditText(String text){
+    public void setTextToEditText(String text) {
         EditTextInputFragment.setText(text);
     }
 
@@ -72,6 +72,8 @@ public class TextInputFragment extends Fragment {
         mListener.onTextInputFragmentStop(timeBeforeCharacter);
     }
 
+
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -80,8 +82,8 @@ public class TextInputFragment extends Fragment {
     }
 
     private void calcTime() {
-        long addedTime=System.currentTimeMillis() - startCurrentForegroundTime;
-        timeBeforeCharacter = timeBeforeCharacter +addedTime;
+        long addedTime = System.currentTimeMillis() - startCurrentForegroundTime;
+        timeBeforeCharacter = timeBeforeCharacter + addedTime;
     }
 
     @Override
@@ -97,15 +99,19 @@ public class TextInputFragment extends Fragment {
         if (previousTextInputLength > editable.length())
             mListener.onCharacterDeleted(editable.toString());
         if (previousTextInputLength < editable.length())
-           mListener.onCharacterAdded(editable.toString(),timeBeforeCharacter);
+            mListener.onCharacterAdded(editable.toString(), timeBeforeCharacter);
         previousTextInputLength = editable.length();
     }
 
     public interface OnFragmentInteractionListener {
         void onTextInputFragmentCreateView();
+
         void onCharacterAdded(String inputText, long timeBeforeCharacter);
+
         void onCharacterDeleted(String inputText);
+
         void onTextInputFragmentStop(long timeBeforeCharacter);
+
         void onTextInputFragmentDetach();
     }
 }
