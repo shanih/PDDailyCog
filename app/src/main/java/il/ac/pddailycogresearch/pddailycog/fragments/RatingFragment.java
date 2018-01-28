@@ -1,11 +1,13 @@
 package il.ac.pddailycogresearch.pddailycog.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -40,7 +42,6 @@ public class RatingFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         mListener.onRatingFragmentCraeteView();
         initViews();
-
         return view;
     }
 

@@ -2,6 +2,7 @@ package il.ac.pddailycogresearch.pddailycog.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -274,14 +275,14 @@ public class TrialChoreActivity extends AppCompatActivity implements
         currentChore.increaseTakePicClickNum();
         currentChore.setResultImg(imgPath);
         buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
+        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
     }
 
     @Override
     public void onTakePictureFragmentViewCreated() {
         if (ImageUtils.lastTakenImageAbsolutePath == null) {
             buttonTrialChoreOk.setEnabled(false);
-            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
         }
         else
             ((TakePictureFragment) partsFragments.get(Chore.PartsConstants.TAKE_PICTURE - 1))
@@ -291,7 +292,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onTakePictureFragmentDetach() {
         buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
+        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
     }
 
     //text input fragment callback
@@ -300,7 +301,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onTextInputFragmentCreateView() {
         if (currentChore.getResultText() == null || currentChore.getResultText().isEmpty()) {
             buttonTrialChoreOk.setEnabled(false);
-            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
         } else {
             ((TextInputFragment) partsFragments.get(Chore.PartsConstants.TEXT_INPUT - 1))
                     .setTextToEditText(currentChore.getResultText());
@@ -310,7 +311,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onCharacterAdded(String inputText, long timeBeforeCharacter) {
         buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
+        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
 
         if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
@@ -322,7 +323,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onCharacterDeleted(String inputText) {
         if (inputText.isEmpty()) {
             buttonTrialChoreOk.setEnabled(false);
-            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
         }
         currentChore.increaseDeletedCharaters();
         currentChore.setResultText(inputText);
@@ -331,7 +332,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onTextInputFragmentStop(long timeBeforeCharacter) {
         buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
+        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
         if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
 
@@ -340,7 +341,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onTextInputFragmentDetach() {
         buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
+        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
     }
 
 
@@ -349,12 +350,12 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onRatingFragmentCraeteView() {
         if (currentChore.getResultRating() == 0) {
             buttonTrialChoreOk.setEnabled(false);
-            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
         } else {
             ((RatingFragment) partsFragments.get(Chore.PartsConstants.RATING - 1))
                     .setRatingSelection(currentChore.getResultRating());
             buttonTrialChoreOk.setEnabled(true);
-            buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
+            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
         }
     }
 
@@ -362,7 +363,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onRatingChanged(int rating) {
         currentChore.setResultRating(rating);
         buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(getResources().getColor(R.color.colorButtons));
+        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
     }
     //endregion
 }
