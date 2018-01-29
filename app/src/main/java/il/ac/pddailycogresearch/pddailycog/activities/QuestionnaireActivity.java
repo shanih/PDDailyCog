@@ -122,9 +122,11 @@ public class QuestionnaireActivity extends AppCompatActivity {
             int id = radioGroupQuestionnaireAns.getChildAt(answers[questionIdx]).getId();
             radioGroupQuestionnaireAns.check(id);
             buttonQuestionnaireOK.setEnabled(true);
-        } else
+            buttonQuestionnaireOK.setBackgroundColor(getResources().getColor(R.color.colorButtons));
+        } else {
             buttonQuestionnaireOK.setEnabled(false);
-        buttonQuestionnaireOK.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+            buttonQuestionnaireOK.setBackgroundColor(getResources().getColor(R.color.semi_gray));
+        }
 
     }
 
