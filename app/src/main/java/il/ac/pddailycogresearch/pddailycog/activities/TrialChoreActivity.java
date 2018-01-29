@@ -36,6 +36,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 import il.ac.pddailycogresearch.pddailycog.stepdetector.StepCounter;
 
 //TODO remove
+//TODO remove
 public class TrialChoreActivity extends AppCompatActivity implements
         TakePictureFragment.OnFragmentInteractionListener,
         InstructionFragment.OnFragmentInteractionListener,
