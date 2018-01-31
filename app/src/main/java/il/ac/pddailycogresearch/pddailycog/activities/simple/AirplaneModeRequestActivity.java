@@ -30,10 +30,10 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
                // FirebaseIO.getInstance().logout();
                 break;
             case R.id.buttonAirplaneOk:
-            //    if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
+                if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying
                     openNextChoreActivity();
-            /*    else
-                    CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);*/
+                else
+                    CommonUtils.showMessage(this,R.string.error_not_in_airplane_mode);
                 break;
         }
     }

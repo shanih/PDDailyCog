@@ -9,9 +9,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;

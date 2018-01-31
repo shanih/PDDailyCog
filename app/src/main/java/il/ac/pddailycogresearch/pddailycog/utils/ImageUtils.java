@@ -89,4 +89,16 @@ public final class ImageUtils {
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         mImageView.setImageBitmap(bitmap);
     }
+
+    public static void deleteFiles(Context context) {
+        File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++)
+            {
+                new File(dir, children[i]).delete();
+            }
+        }
+    }
 }

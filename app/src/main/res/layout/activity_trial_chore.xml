@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/StyleLayuot"
+
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.TrialChoreActivity">
 
     <RelativeLayout

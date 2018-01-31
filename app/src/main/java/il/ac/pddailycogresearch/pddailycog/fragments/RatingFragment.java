@@ -1,13 +1,11 @@
 package il.ac.pddailycogresearch.pddailycog.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -38,6 +36,7 @@ public class RatingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_rating, container, false);
         unbinder = ButterKnife.bind(this, view);
         mListener.onRatingFragmentCraeteView();
@@ -57,9 +56,13 @@ public class RatingFragment extends Fragment {
         };
 
         for (int i = 1; i <= 5; i++) {
-            RadioButton rb = new RadioButton(getContext());
+           // RadioButton rb = new RadioButton(getContext(),null,R.style.tryRadioButton);
+            RadioButton rb = (RadioButton) getLayoutInflater().inflate(R.layout.template_radiobutton, null);
+
             rb.setText(String.valueOf(i));
             rb.setOnClickListener(radioButtonsListener);
+            radioGroupRatingFragment.setId(radioGroupRatingFragment.getChildCount());
+
             radioGroupRatingFragment.addView(rb);
             if (i == selection)
                 radioGroupRatingFragment.check(rb.getId());

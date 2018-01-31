@@ -113,7 +113,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
         String[] answersTexts = getResources().getStringArray(answers_ids[questionIdx]);
         radioGroupQuestionnaireAns.removeAllViews();
         for (String answer : answersTexts) {
-            RadioButton rb = new RadioButton(this);
+           // RadioButton rb = new RadioButton(this);
+            RadioButton rb = (RadioButton) getLayoutInflater().inflate(R.layout.template_radiobutton, null);
             rb.setText(answer);
             rb.setOnClickListener(radioButtonsListener);
             radioGroupQuestionnaireAns.addView(rb);

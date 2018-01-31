@@ -1,6 +1,6 @@
 package il.ac.pddailycogresearch.pddailycog.activities;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -35,8 +34,7 @@ import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 import il.ac.pddailycogresearch.pddailycog.stepdetector.StepCounter;
 
-//TODO remove
-//TODO remove
+
 public class TrialChoreActivity extends AppCompatActivity implements
         TakePictureFragment.OnFragmentInteractionListener,
         InstructionFragment.OnFragmentInteractionListener,
@@ -89,8 +87,8 @@ public class TrialChoreActivity extends AppCompatActivity implements
         stepCounter.registerSensors(this);
         startCurrentViewedPartTime = System.currentTimeMillis();
         startCurrentViewPartStepsNum = stepCounter.getStepsNum();
-        InputMethodManager imm = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+       /* InputMethodManager imm = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);*/
     }
 
     @Override
@@ -153,7 +151,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
                 replaceFragment(Chore.PartsConstants.INSTRUCTION);
                 break;
             case R.id.button_sound:
-                mpori = MediaPlayer.create(getApplicationContext(), R.raw.temp_audio_instr);
+                mpori = MediaPlayer.create(getApplicationContext(), R.raw.trial_instrc_male_sound);
                 mpori.start();
                 onSoundButtonClick();
                 break;
@@ -169,6 +167,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
         transaction.replace(R.id.frameLayoutTrialFragmentContainer, partsFragments.get(nextPart - 1));
         //   transaction.addToBackStack(null); //we block back so this is useless
         transaction.commit();
+        CommonUtils.hideKeyboard(this);
     }
 
     private void moveToNextPart() {

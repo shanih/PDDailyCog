@@ -5,20 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.GoodByeActivity">
-<RelativeLayout
-    style="@style/StyleLayuot">
-    <TextView
-    style="@style/StyleTextView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/textViewGoodBye"
-    android:text="@string/goodbye_msg"/>
-    <Button
-        style="@style/StyleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewGoodBye"
-        android:id="@+id/buttonGoodByeOK"
-        android:text="@string/ok"/>
-</RelativeLayout>
+
+    <RelativeLayout style="@style/StyleLayuot">
+
+        <TextView
+            android:id="@+id/textViewGoodBye"
+            style="@style/StyleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:autoSizeTextType="uniform"
+android:layout_above="@+id/buttonGoodByeOK"
+            android:text="@string/goodbye_msg"
+          />
+
+        <Button
+            android:id="@+id/buttonGoodByeOK"
+            style="@style/StyleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+android:layout_alignParentBottom="true"
+            android:text="@string/ok" />
+    </RelativeLayout>
 </RelativeLayout>

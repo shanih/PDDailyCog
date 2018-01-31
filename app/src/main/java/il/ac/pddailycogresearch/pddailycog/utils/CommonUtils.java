@@ -17,6 +17,8 @@ import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -54,6 +56,15 @@ public final class CommonUtils {
         showMessage(context,context.getResources().getString(msgId));
     }
 
+    public static void hideKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     public static String getTimeStamp() {
         return new SimpleDateFormat(Consts.TIMESTAMP_FORMAT, Locale.US).format(new Date());
     }
@@ -73,4 +84,6 @@ public final class CommonUtils {
 
         }
     }
+
+
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
@@ -45,9 +45,11 @@
     </style>
 
     <!-- TextView -->
-    <style name="StyleTextView" parent="android:Theme">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">30sp</item>
+    <style  name="StyleTextView" parent="android:Theme">
+        <item name="android:textColor">@color/black</item><!--
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeMaxTextSize">30sp</item>
+        <item name="autoSizeMinTextSize">12sp</item>-->
         <item name="android:textStyle">italic</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">fill</item>
@@ -62,14 +64,16 @@
     <!-- TextView -->
     <style name="StyleTextRadioButton" parent="android:Theme">
         <item name="android:textColor">@color/black</item>
+        <item name="android:padding">10dp</item>
         <item name="android:textSize">30sp</item>
-        <item name="android:textStyle">italic</item>
+        <!--<item name="android:textStyle">italic</item>-->
         <item name="android:layout_gravity">fill</item>
     </style>
 
     <!-- Layout -->
     <style name="StyleLayuot" parent="android:Theme">
         <item name="android:gravity">center</item>
+        <item name="android:layoutDirection"  tools:targetApi="17" >rtl</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -78,10 +82,7 @@
     <!-- RadioButton -->
     <style name="StyleRadioButton" parent="android:Theme">
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">70sp</item>
-        <item name="android:width">60dp</item>
-        <item name="android:height">60dp</item>
-        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
     </style>

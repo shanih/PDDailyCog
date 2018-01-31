@@ -8,28 +8,13 @@
     <TextView
         style="@style/StyleTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        app:autoSizeTextType="uniform"
+
         android:id="@+id/textViewInstructionFragment"
         android:text="@string/trail_chore_instruction" />
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:src="@drawable/sound_icon"-->
-        <!--android:id="@+id/buttonInstructionFragmentSound"-->
-        <!--app:fabSize="normal"-->
-        <!--app:backgroundTint="@color/colorButtons"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_margin="15dp"-->
-        <!--android:layout_below="@id/textViewInstructionFragment"-->
-        <!--android:layout_centerVertical="true" />-->
-    <!--<Button-->
-        <!--style="@style/StyleButton"-->
-        <!--android:id="@+id/buttonInstructionFragmentSound"-->
-        <!--android:layout_below="@id/textViewInstructionFragment"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/sound"/>-->
+
 
 
 </RelativeLayout>

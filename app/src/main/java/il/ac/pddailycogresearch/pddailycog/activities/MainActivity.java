@@ -12,6 +12,8 @@ import butterknife.OnClick;
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.activities.simple.AirplaneModeRequestActivity;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
+import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 
 public class MainActivity extends AppCompatActivity {
 
