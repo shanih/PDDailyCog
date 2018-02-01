@@ -86,6 +86,7 @@ public class RatingFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener.onRatingFragmentDetach();
         mListener = null;
     }
 
@@ -114,5 +115,7 @@ public class RatingFragment extends Fragment {
         void onRatingFragmentCraeteView();
 
         void onRatingChanged(int rating);
+
+        void onRatingFragmentDetach();
     }
 }

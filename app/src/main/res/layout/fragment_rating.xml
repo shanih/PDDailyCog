@@ -9,6 +9,7 @@
             style="@style/StyleTextView"
     -->
     <TextView
+        style="@style/StyleTextView"
         android:id="@+id/textViewHowWell"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,7 +55,7 @@
                 android:layout_height="wrap_content"
                 app:autoSizeTextType="uniform"
                 app:autoSizeMaxTextSize="20sp"
-                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMinTextSize="15sp"
                 android:layout_gravity="start"
                 android:text="@string/not_well"
                />
@@ -70,7 +71,7 @@
                 android:layout_height="wrap_content"
                 app:autoSizeTextType="uniform"
                 app:autoSizeMaxTextSize="20sp"
-                app:autoSizeMinTextSize="10sp"
+                app:autoSizeMinTextSize="15sp"
 
                 android:layout_gravity="end"
                 android:text="@string/extremely_well"

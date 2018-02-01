@@ -96,23 +96,24 @@ public class DialogUtils {
 
     public static void createTurnOffAirplaneModeAlertDialog(final Activity activity){
         createAlertDialog(activity, R.string.reminder, R.string.turn_off_airplane_mode_alert_msg,
-                R.string.open_settings, android.R.string.cancel,
+                R.string.open_settings, R.string.exit,
                 new IOnAlertDialogResultListener() {
                     @Override
                     public void onResult(boolean result) {
-                        if(result)
+                        if(result) {
                             activity.startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
+                        }
                         CommonUtils.closeApp(activity);
                     }
                 });
     }
 
-    public static void createGoodbyeDialog(final Activity activity) {
-        createAlertDialog(activity, R.string.goodbye_title, R.string.goodbye_msg, android.R.string.ok,
+    public static void createTurnOnAirPlaneModeDialog(final Activity activity) {
+        createAlertDialog(activity, R.string.reminder, R.string.airplane_mode_request, android.R.string.ok,
                 new IOnAlertDialogResultListener() {
                     @Override
                     public void onResult(boolean result) {
-                        createTurnOffAirplaneModeAlertDialog(activity);
+                        activity.startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
                     }
                 });
     }

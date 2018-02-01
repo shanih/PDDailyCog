@@ -46,6 +46,8 @@ public class Chore implements Serializable {
 
     private int instructionClicksNum;
 
+    private int exitClickNum;
+
     private int soundInstrClicksNum;
 
     private int takePicClicksNum;
@@ -114,6 +116,16 @@ public class Chore implements Serializable {
     }
     public void setSoundInstrClicksNum(int soundInstrClicksNum) {
         this.soundInstrClicksNum = soundInstrClicksNum;
+    }
+
+    public void increaseExitClickNum(){
+        this.exitClickNum++;
+    }
+    public int getExitClickNum() {
+        return exitClickNum;
+    }
+    public void setExitClickNum(int exitClickNum) {
+        this.exitClickNum = exitClickNum;
     }
 
     public void increaseTakePicClickNum() {

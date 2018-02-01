@@ -49,7 +49,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @BindView(R.id.buttonTrialChoreInstruction)
     Button buttonTrialChoreInstruction;
 
-    @BindView(R.id.button_sound)
+    @BindView(R.id.button_sound_trial_activity)
     FloatingActionButton button_sound;
 
     ArrayList<Fragment> partsFragments = new ArrayList<>();
@@ -83,6 +83,8 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+        if(!CommonUtils.isAirplaneMode(this)) //TODO think if useful
+            DialogUtils.createTurnOnAirPlaneModeDialog(this);
         button_sound.setVisibility(View.GONE);
         stepCounter.registerSensors(this);
         startCurrentViewedPartTime = System.currentTimeMillis();
@@ -96,6 +98,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
         terminateChore();
         super.onStop();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -138,10 +141,11 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
 
-    @OnClick({R.id.buttonTrialChoreOk, R.id.buttonTrialChoreInstruction, R.id.buttonExit, R.id.button_sound})
+    @OnClick({R.id.buttonTrialChoreOk, R.id.buttonTrialChoreInstruction, R.id.buttonExit, R.id.button_sound_trial_activity})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonExit:
+                currentChore.increaseExitClickNum();
                 showExitAlertDialog();
                 break;
             case R.id.buttonTrialChoreInstruction:
@@ -150,24 +154,39 @@ public class TrialChoreActivity extends AppCompatActivity implements
                 currentChore.increaseInstrcClicksNum();
                 replaceFragment(Chore.PartsConstants.INSTRUCTION);
                 break;
-            case R.id.button_sound:
-                mpori = MediaPlayer.create(getApplicationContext(), R.raw.trial_instrc_male_sound);
-                mpori.start();
-                onSoundButtonClick();
+            case R.id.button_sound_trial_activity:
+                toggleMediaPlayer();
                 break;
             case R.id.buttonTrialChoreOk:
+                CommonUtils.hideKeyboard(this);
                 moveToNextPart();
                 replaceFragment(currentChore.getCurrentPartNum());
                 break;
         }
     }
 
+    private void toggleMediaPlayer() {
+        if(mpori==null) {
+            mpori = MediaPlayer.create(getApplicationContext(), R.raw.trial_instrc_male_sound);
+        }
+        if (mpori.isPlaying()) {
+            mpori.pause();
+            button_sound.setImageResource(R.drawable.sound_icon);
+        }
+        else {
+            button_sound.setImageResource(R.drawable.stop_ic);
+            mpori.start();
+            onSoundButtonClick();
+        }
+    }
+
     private void replaceFragment(int nextPart) {
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frameLayoutTrialFragmentContainer, partsFragments.get(nextPart - 1));
         //   transaction.addToBackStack(null); //we block back so this is useless
         transaction.commit();
-        CommonUtils.hideKeyboard(this);
+
     }
 
     private void moveToNextPart() {
@@ -195,6 +214,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
                             terminateChore();
                             DialogUtils.createTurnOffAirplaneModeAlertDialog(TrialChoreActivity.this);
                             // finish();
+                           // CommonUtils.closeApp(TrialChoreActivity.this);
                         }
                     }
                 });
@@ -221,6 +241,11 @@ public class TrialChoreActivity extends AppCompatActivity implements
         }
         this.startCurrentViewPartStepsNum = stepCounter.getStepsNum();
         this.startCurrentViewedPartTime = System.currentTimeMillis();
+    }
+
+    private void unableOkButton() {
+        buttonTrialChoreOk.setEnabled(false);
+        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
     }
 
     private void finishChore() {
@@ -274,15 +299,13 @@ public class TrialChoreActivity extends AppCompatActivity implements
     public void onPictureBeenTaken(String imgPath) {
         currentChore.increaseTakePicClickNum();
         currentChore.setResultImg(imgPath);
-        buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
+        enableOkButton();
     }
 
     @Override
     public void onTakePictureFragmentViewCreated() {
         if (ImageUtils.lastTakenImageAbsolutePath == null) {
-            buttonTrialChoreOk.setEnabled(false);
-            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
+            unableOkButton();
         }
         else
             ((TakePictureFragment) partsFragments.get(Chore.PartsConstants.TAKE_PICTURE - 1))
@@ -291,6 +314,10 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     @Override
     public void onTakePictureFragmentDetach() {
+        enableOkButton();
+    }
+
+    private void enableOkButton() {
         buttonTrialChoreOk.setEnabled(true);
         buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
     }
@@ -300,8 +327,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onTextInputFragmentCreateView() {
         if (currentChore.getResultText() == null || currentChore.getResultText().isEmpty()) {
-            buttonTrialChoreOk.setEnabled(false);
-            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
+            unableOkButton();
         } else {
             ((TextInputFragment) partsFragments.get(Chore.PartsConstants.TEXT_INPUT - 1))
                     .setTextToEditText(currentChore.getResultText());
@@ -310,8 +336,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     @Override
     public void onCharacterAdded(String inputText, long timeBeforeCharacter) {
-        buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
+        enableOkButton();
 
         if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
@@ -322,17 +347,16 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onCharacterDeleted(String inputText) {
         if (inputText.isEmpty()) {
-            buttonTrialChoreOk.setEnabled(false);
-            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
+            unableOkButton();
         }
         currentChore.increaseDeletedCharaters();
         currentChore.setResultText(inputText);
     }
 
+
     @Override
     public void onTextInputFragmentStop(long timeBeforeCharacter) {
-        buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
+        enableOkButton();
         if (currentChore.getAddedCharactersNum() == 0)
             currentChore.addTimeToTextInputTimeBeforeFstChar(timeBeforeCharacter);
 
@@ -340,8 +364,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
 
     @Override
     public void onTextInputFragmentDetach() {
-        buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
+        enableOkButton();
     }
 
 
@@ -349,21 +372,25 @@ public class TrialChoreActivity extends AppCompatActivity implements
     @Override
     public void onRatingFragmentCraeteView() {
         if (currentChore.getResultRating() == 0) {
-            buttonTrialChoreOk.setEnabled(false);
-            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#979797"));
+            ((RatingFragment) partsFragments.get(Chore.PartsConstants.RATING - 1))
+                    .setRatingSelection(0);
+            unableOkButton();
         } else {
             ((RatingFragment) partsFragments.get(Chore.PartsConstants.RATING - 1))
                     .setRatingSelection(currentChore.getResultRating());
-            buttonTrialChoreOk.setEnabled(true);
-            buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
+            enableOkButton();
         }
     }
 
     @Override
     public void onRatingChanged(int rating) {
         currentChore.setResultRating(rating);
-        buttonTrialChoreOk.setEnabled(true);
-        buttonTrialChoreOk.setBackgroundColor(Color.parseColor("#4656AC"));
+        enableOkButton();
+    }
+
+    @Override
+    public void onRatingFragmentDetach() {
+        enableOkButton();
     }
     //endregion
 }
