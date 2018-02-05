@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -75,6 +78,11 @@ public class LoginActivity extends AppCompatActivity {
 
         String legalEmial = username+ Consts.EMAIL_SUFFIX;
 
+        if(!isEmailValid(legalEmial)){
+            onError(R.string.wrong_username);
+            return;
+        }
+
         mFirebaseIO.signUpNewUser(LoginActivity.this, legalEmial, password,
                 new IOnFirebaseErrorListener() {
                     @Override
@@ -86,6 +94,16 @@ public class LoginActivity extends AppCompatActivity {
         DialogUtils.showLoading(this);
     }
 
+    public  boolean isEmailValid(String email) {
+        Pattern pattern;
+        Matcher matcher;
+        final String EMAIL_PATTERN =
+                "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
     private void onError(@StringRes int msgID) {
         CommonUtils.showMessage(this, msgID);
     }

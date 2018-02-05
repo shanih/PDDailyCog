@@ -55,6 +55,7 @@
     <string name="before_instr">לפניך מספר הנחיות שהנך מתבקש לבצע. אנא עקוב אחר ההוראות. באפשרותך לשמוע את ההנחיות על ידי לחיצה על סימן הרמקול. מרגע שתלחץ על "בצע", ההנחיה תעלם מהמסך אך תוכל לחזור לקרוא אותה שוב.</string>
     <string name="stop">הפסק</string>
     <string name="answers_xml_error">אירעה שגיאה בתצורת התשובות לשאלון</string>
+    <string name="wrong_username">שם המשתמש אינו תקין</string>
 
 
 </resources>
