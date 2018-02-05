@@ -8,6 +8,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
@@ -25,10 +27,14 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver { //ask Tal if
     public void onReceive(Context context, Intent intent) {
         //act only if there is internet connection and if it is the first instance to react
         //needed because in airplane toggle happens few connectivity changes
-        if(isNetworkAvailable(context)&&++race==1)
+        if(isNetworkAvailable(context)&&++race==1) {
             saveChoreImageInDB(context);
-        else
-            Log.d(TAG,"false receiver");
+            Crashlytics.log("Receiver log");
+            Crashlytics.logException(new Throwable("Receiver non-fatal"));
+        }
+        else {
+            Log.d(TAG, "false receiver");
+        }
     }
 
     private void saveChoreImageInDB(Context context) {

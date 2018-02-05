@@ -23,6 +23,7 @@ import il.ac.pddailycogresearch.pddailycog.R;
  * to handle interaction events.
  */
 public class TextInputFragment extends Fragment {
+    private static final String PREVIOUS_TEXT_INPUT_LENGTH = "previous_text_input_length";
     @BindView(R.id.EditTextInputFragment)
     EditText EditTextInputFragment;
     Unbinder unbinder;
@@ -42,8 +43,11 @@ public class TextInputFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_text_input, container, false);
+        if(savedInstanceState!=null){
+            previousTextInputLength = savedInstanceState.getInt(PREVIOUS_TEXT_INPUT_LENGTH);
+        }
         unbinder = ButterKnife.bind(this, view);
-        mListener.onTextInputFragmentCreateView();
+        mListener.onTextInputFragmentCreateView(this);
         return view;
     }
 
@@ -61,6 +65,12 @@ public class TextInputFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(PREVIOUS_TEXT_INPUT_LENGTH,previousTextInputLength);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -102,7 +112,7 @@ public class TextInputFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        void onTextInputFragmentCreateView();
+        void onTextInputFragmentCreateView(TextInputFragment context);
 
         void onCharacterAdded(String inputText, long timeBeforeCharacter);
 

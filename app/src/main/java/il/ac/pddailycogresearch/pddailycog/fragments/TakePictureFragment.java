@@ -35,6 +35,8 @@ import static android.app.Activity.RESULT_OK;
  * to handle interaction events.
  */
 public class TakePictureFragment extends Fragment {
+    private static final String IMG_ANSOLUTE_PATH_TAG = "img_absolute_path";
+    private static final String IMG_URI_TAG = "img_uri";
     @BindView(R.id.imageViewTakePictureFragment)
     ImageView imageViewTakePictureFragment;
     @BindView(R.id.buttonTakePictureFragment)
@@ -44,7 +46,7 @@ public class TakePictureFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private String imgAbsolutePath;
     private Uri imgUri;
     private static int imageViewHeight;
@@ -60,6 +62,10 @@ public class TakePictureFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_take_picture, container, false);
+        if(savedInstanceState!=null) {
+            imgAbsolutePath = savedInstanceState.getString(IMG_ANSOLUTE_PATH_TAG);
+            imgUri = (Uri) savedInstanceState.getParcelable(IMG_URI_TAG);
+        }
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -71,7 +77,7 @@ public class TakePictureFragment extends Fragment {
         view.post(new Runnable() {
             @Override
             public void run() {
-                mListener.onTakePictureFragmentViewCreated();
+                mListener.onTakePictureFragmentViewCreated(TakePictureFragment.this);
                 imageViewHeight=imageViewTakePictureFragment.getHeight();
                 imageViewWidth = imageViewTakePictureFragment.getWidth();
             }
@@ -91,6 +97,13 @@ public class TakePictureFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(IMG_ANSOLUTE_PATH_TAG,imgAbsolutePath);
+        outState.putParcelable(IMG_URI_TAG,imgUri);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -143,11 +156,11 @@ public class TakePictureFragment extends Fragment {
     }
 
     private void setImageToView(String absolutePath) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenHeight = metrics.heightPixels;
-        int imageHeight = (int) Math.round(screenHeight * Consts.IMAGEVIEW_HEIGHT_PERCENTAGE);
-        int imageWidth = metrics.widthPixels;
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        int screenHeight = metrics.heightPixels;
+//        int imageHeight = (int) Math.round(screenHeight * Consts.IMAGEVIEW_HEIGHT_PERCENTAGE);
+//        int imageWidth = metrics.widthPixels;
      //   imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
         ImageUtils.setPic(imageViewTakePictureFragment, absolutePath, imageViewHeight, imageViewWidth);
 
@@ -168,7 +181,7 @@ public class TakePictureFragment extends Fragment {
 
         void onPictureBeenTaken(String imgUri);
 
-        void onTakePictureFragmentViewCreated();
+        void onTakePictureFragmentViewCreated(TakePictureFragment context);
 
         void onTakePictureFragmentDetach();
     }

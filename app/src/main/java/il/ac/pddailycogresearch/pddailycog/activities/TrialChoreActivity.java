@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +32,8 @@ import il.ac.pddailycogresearch.pddailycog.model.Chore;
 import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.DialogUtils;
-import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 import il.ac.pddailycogresearch.pddailycog.stepdetector.StepCounter;
+import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 
 
 public class TrialChoreActivity extends AppCompatActivity implements
@@ -42,6 +43,7 @@ public class TrialChoreActivity extends AppCompatActivity implements
         RatingFragment.OnFragmentInteractionListener {
 
     private static final String TAG = TrialChoreActivity.class.getSimpleName();
+    private static final String CURRENT_CHORE_KEY = "current_chore";
 
     @BindView(R.id.buttonTrialChoreOk)
     Button buttonTrialChoreOk;
@@ -69,7 +71,17 @@ public class TrialChoreActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_trial_chore);
         ButterKnife.bind(this);
         stepCounter.registerSensors(this);
-        initMembers();
+
+        if(savedInstanceState!=null){
+            currentChore = (Chore) savedInstanceState.getSerializable(CURRENT_CHORE_KEY);
+            initMembers();
+
+           // replaceFragment(currentChore.getCurrentPartNum());
+        } else {
+            initMembers();
+            initChore();
+        }
+
     }
 
     private void initMembers() {
@@ -77,20 +89,26 @@ public class TrialChoreActivity extends AppCompatActivity implements
         partsFragments.add(new TakePictureFragment());
         partsFragments.add(new TextInputFragment());
         partsFragments.add(new RatingFragment());
-        initChore();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(!CommonUtils.isAirplaneMode(this)) //TODO think if useful
+        if(!CommonUtils.isAirplaneMode(this)) { //TODO think if useful
             DialogUtils.createTurnOnAirPlaneModeDialog(this);
+        }
         button_sound.setVisibility(View.GONE);
         stepCounter.registerSensors(this);
         startCurrentViewedPartTime = System.currentTimeMillis();
         startCurrentViewPartStepsNum = stepCounter.getStepsNum();
        /* InputMethodManager imm = (InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);*/
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(CURRENT_CHORE_KEY,currentChore);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -303,13 +321,12 @@ public class TrialChoreActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onTakePictureFragmentViewCreated() {
+    public void onTakePictureFragmentViewCreated(TakePictureFragment context) {
         if (ImageUtils.lastTakenImageAbsolutePath == null) {
             unableOkButton();
         }
         else
-            ((TakePictureFragment) partsFragments.get(Chore.PartsConstants.TAKE_PICTURE - 1))
-                    .setLastTakenImageToView();
+            context.setLastTakenImageToView();
     }
 
     @Override
@@ -325,12 +342,11 @@ public class TrialChoreActivity extends AppCompatActivity implements
     //text input fragment callback
 
     @Override
-    public void onTextInputFragmentCreateView() {
+    public void onTextInputFragmentCreateView(TextInputFragment context) {
         if (currentChore.getResultText() == null || currentChore.getResultText().isEmpty()) {
             unableOkButton();
         } else {
-            ((TextInputFragment) partsFragments.get(Chore.PartsConstants.TEXT_INPUT - 1))
-                    .setTextToEditText(currentChore.getResultText());
+            context.setTextToEditText(currentChore.getResultText());
         }
     }
 

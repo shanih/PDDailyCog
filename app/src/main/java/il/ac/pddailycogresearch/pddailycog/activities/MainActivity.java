@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (!FirebaseIO.getInstance().isUserLogged())
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        
     }
 
     @OnClick({R.id.mainButtonOk,R.id.buttonMainOpenQuestionnaire})
