@@ -1,18 +1,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="il.ac.pddailycogresearch.pddailycog.fragments.TakePictureFragment">
-
+<!--<RelativeLayout
+    android:id="@+id/layoutImage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">-->
     <ImageView
         android:id="@+id/imageViewTakePictureFragment"
+        android:layout_alignParentTop="true"
+        android:layout_margin="15dp"
+        android:layout_above="@+id/buttonTakePictureFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"/>
+<!--</RelativeLayout>
+<RelativeLayout
 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/layoutImage"
+    android:layout_alignParentBottom="true">-->
     <Button
+        style="@style/StyleButton"
         android:id="@+id/buttonTakePictureFragment"
         android:layout_width="wrap_content"
-        android:layout_below="@id/imageViewTakePictureFragment"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
         android:text="@string/take_picture" />
 </RelativeLayout>
+<!--
+</RelativeLayout>
+-->

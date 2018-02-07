@@ -1,27 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PDDailyCog</string>
 
+
     <!--Sign in -->
-    <string name="sign_in">Sign In</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
+    <string name="sign_in">היכנס</string>
 
-    <string name="ok">OK</string>
-    <string name="welcome_text">welcome</string>
-    <string name="open_settings">Open Airplane Mode Settings</string>
-    <string name="airplane_mode_request">Please Set Airplane Mode</string>
-    <string name="error_not_in_airplane_mode">You are not in Airplane Mode</string>
-    <string name="error_no_more_chores">no more chores</string>
-    <string name="exit_alert_header">Warning</string>
-    <string name="exit_alert_message">You are quiting without finishing the chore. Are you sure?</string>
+    <string name="ok">אישור</string>
+    <string name="welcome_text">לפניך מספר הנחיות שהנך מתבקש לבצע. אנא עקוב אחר ההוראות, באפשרותך לשמוע את ההנחיות על ידי לחיצה על סימן הרמקול. מרגע שתלחץ על \"אישור\", ההנחיה תעלם מהמסך אך תוכל לחזור ולהקשיב להוראות שוב</string>
+    <string name="open_settings">פתח הגדרות מצב טיסה</string>
+    <string name="airplane_mode_request">אנא הכנס את המכשיר למצב טיסה</string>
+    <string name="error_not_in_airplane_mode">המכשיר אינו במצב טיסה</string>
+    <string name="exit_alert_header">אזהרה</string>
+    <string name="exit_alert_message">אתה יוצא מבלי לסיים את המשימה. האם אתה בטוח?</string>
+    <!--Error messages-->
+    <string name="some_error">התרחשה שגיאה</string>
+    <string name="error_no_more_chores">אין עוד משימות</string>
 
-    <string name="take_picture">take picture</string>
-    <string name="instructions">Instructions</string>
-    <string name="re_take_picture">replace picture</string>
-    <string name="enter_text_input_hint">Enter Text Input Here</string>
-    <string name="sound">sound</string>
+    <!--Sign Up-->
+    <string name="signup">הרשמה</string>
+    <string name="username">שם משתמש</string>
+    <string name="password">סיסמה</string>
+    <string name="confirm_password">אשר סיסמה</string>
+
+    <!--Login Validation-->
+    <string name="empty_username">אנא ספק שם משתמש</string>
+    <string name="short_password">על הסיסמה להיות באורך 6 תווים לפחות</string>
+    <string name="no_confirm_password">אנא הכנס את סיסמתך שוב לצורך אישור</string>
+    <string name="login_failed">התחברות נכשלה</string>
+    <string name="unmatch_passwords">הסיסמאות אינן תואמות</string>
+    <string name="take_picture">צלם תמונה</string>
+    <string name="instructions">הוראות</string>
+    <string name="re_take_picture">צלם מחדש</string>
+    <string name="enter_text_input_hint">הכנס משימת טקסט</string>
+    <string name="sound">השמע</string>
+    <string name="trail_chore_instruction">
+קח בידך את הטלפון שלך, מצא את המפתח של הבית, ולך לחדר השינה שלך. שים את המפתח של הבית על הכרית,  קרב את השמיכה אל הכרית, וצלם. שב על המיטה והקלד את התאריך והשעה, ואת שמך המלא, שם ושם משפחה, בטלפון שלך.
+</string>
+    <string name="reminder">תזכורת</string>
+    <string name="turn_off_airplane_mode_alert_msg">מומלץ לכבות את מצב הטיסה בעת עזיבת האפליקציה</string>
+    <string name="close">סגור</string>
+    <string name="rating_question">עד כמה טוב אתה חושב שביצעת את המשימה?</string>
+    <string name="not_well">לא טוב</string>
+    <string name="extremely_well">מצוין</string>
+    <string name="goodbye_title">תודה</string>
+    <string name="goodbye_msg">השלמת את המשימה, רוב תודות, שא ברכה</string>
+    <string name="exit">יציאה</string>
+    <string name="error_in_airplane_mode">לא בוצעה יציאה ממצב טיסה</string>
+    <string name="close_airplane_mode">סגור מצב טיסה לפני יציאתך</string>
+    <string name="open_questionnaire">פתח שאלון</string>
+    <string name="continue_">המשך</string>
 
 
-    <string name="trail_chore_instruction">take your phone, find your key, put it on your bed and shoot a photo. sit there nnd insert time and date and your full name</string>
+    <string name="before_instr">לפניך מספר הנחיות שהנך מתבקש לבצע. אנא עקוב אחר ההוראות. באפשרותך לשמוע את ההנחיות על ידי לחיצה על סימן הרמקול. מרגע שתלחץ על "בצע", ההנחיה תעלם מהמסך אך תוכל לחזור לקרוא אותה שוב.</string>
+    <string name="stop">הפסק</string>
+    <string name="answers_xml_error">אירעה שגיאה בתצורת התשובות לשאלון</string>
+    <string name="wrong_username">שם המשתמש אינו תקין</string>
+
 
 </resources>

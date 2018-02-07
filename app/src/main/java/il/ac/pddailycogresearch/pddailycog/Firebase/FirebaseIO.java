@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,7 +24,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFireBasLoginEventListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseErrorListener;
+import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseQuestionnaireListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseRetrieveLastChoreListener;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnFirebaseSaveImageListener;
 import il.ac.pddailycogresearch.pddailycog.model.Chore;
@@ -58,7 +64,6 @@ public class FirebaseIO {
         database.setPersistenceEnabled(true);
         mAuth = FirebaseAuth.getInstance();
 
-       // initListeners();
         initAuthListener();
         initUserDatabaseReference();
     }
@@ -71,7 +76,8 @@ public class FirebaseIO {
     }
 
     private void initUserDatabaseReference() {
-        if(mAuth.getCurrentUser()!=null) {
+        if (mAuth.getCurrentUser() != null) {
+            Crashlytics.setUserIdentifier(mAuth.getUid());
             mUserReference = database.getReference(Consts.USERS_KEY).child(mAuth.getCurrentUser().getUid());
             mUserReference.keepSynced(true);//because persistence is enable, need to make sure the data is synced with database
             mStorageReference = FirebaseStorage.getInstance().getReference().child(mAuth.getCurrentUser().getUid());
@@ -105,51 +111,52 @@ public class FirebaseIO {
         };
     }
 
-    private void initListeners() {
-        // TODO - Add Firebase DB Listeners..
-
-//        // Read from the database
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG, "Value is: " + value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
-    }
 
     public void saveChore(Chore chore) {
         mUserReference.child(Consts.CHORES_KEY)
-                .child(String.valueOf(chore.getChoreNum())).setValue(chore);
+                .child(String.valueOf(chore.getTaskNum())).setValue(chore);
 
     }
 
-    public void retrieveLastChore(final IOnFirebaseRetrieveLastChoreListener onFirebaseRetrieveLastChoreListener){
+    public void retrieveLastChore(final IOnFirebaseRetrieveLastChoreListener onFirebaseRetrieveLastChoreListener) {
         Query lastChoreQuery = mUserReference.child(Consts.CHORES_KEY).orderByKey().limitToLast(1);
         lastChoreQuery.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Chore chore =null;
+                        Chore chore = null;
                         if (dataSnapshot.getChildren().iterator().hasNext()) {
                             DataSnapshot ds = dataSnapshot.getChildren().iterator().next();
                             chore = ds.getValue(Chore.class);
                         }
-                       onFirebaseRetrieveLastChoreListener.onChoreRetrieved(chore);
+                        onFirebaseRetrieveLastChoreListener.onChoreRetrieved(chore);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         databaseError.toException().printStackTrace();
                         onFirebaseRetrieveLastChoreListener.onError(databaseError.getMessage());
+                    }
+                }
+        );
+    }
+
+    public void retrieveQuestionnaire(final IOnFirebaseQuestionnaireListener firebaseQuestionnaireListener){
+        mUserReference.child(Consts.QUESTIONNAIRE_KEY).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<Integer> answers = new ArrayList<Integer>();
+                        for (DataSnapshot valSnapshot: dataSnapshot.getChildren()) {
+                            answers.add(valSnapshot.getValue(Integer.class));
+                        }
+                        firebaseQuestionnaireListener.onAnswersRetreived(answers);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        firebaseQuestionnaireListener.onError(databaseError.toException());
+
                     }
                 }
         );
@@ -166,14 +173,23 @@ public class FirebaseIO {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                @SuppressWarnings("VisibleForTests")  Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                Log.d(TAG,"image been saved in: "+downloadUrl.toString());
+                @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                Log.d(TAG, "image been saved in: " + downloadUrl.toString());
                 onFirebaseSaveImageListener.onImageSaved(downloadUrl);
             }
         });
     }
 
-    public void signUpNewUser(final Activity activity, String email, String password) {
+    public void saveQuestionnaireAnswer(int key, int value){
+        mUserReference.child(Consts.QUESTIONNAIRE_KEY).child(String.valueOf(key)).setValue(value);
+    }
+    public void saveQuestionnaireAnswer(List<Integer> answers){
+        mUserReference.child(Consts.QUESTIONNAIRE_KEY).setValue(answers);
+    }
+
+
+    public void signUpNewUser(Activity activity, String email, String password,
+                              final IOnFirebaseErrorListener firebaseErrorListener) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -183,10 +199,8 @@ public class FirebaseIO {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()&&task.getException()!=null) {
-                            Toast.makeText(activity, task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                            task.getException().printStackTrace();
+                        if (!task.isSuccessful() && task.getException() != null) {
+                            firebaseErrorListener.onError(task.getException());
                         }
 
                     }
@@ -233,7 +247,12 @@ public class FirebaseIO {
     public int getCurrentLoginState() {
         return mCurrentUserLoginState;
     }
-    public boolean isUserLogged(){
-        return mAuth.getCurrentUser()!=null;
+
+    public boolean isUserLogged() {
+        return mAuth.getCurrentUser() != null;
+    }
+
+    public void logout() {
+        mAuth.signOut();
     }
 }

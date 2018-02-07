@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import il.ac.pddailycogresearch.pddailycog.R;
+import il.ac.pddailycogresearch.pddailycog.utils.CommonUtils;
 import il.ac.pddailycogresearch.pddailycog.utils.Consts;
 import il.ac.pddailycogresearch.pddailycog.utils.ImageUtils;
 
@@ -32,61 +33,28 @@ import static android.app.Activity.RESULT_OK;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TakePictureFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class TakePictureFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String IMG_ANSOLUTE_PATH_TAG = "img_absolute_path";
+    private static final String IMG_URI_TAG = "img_uri";
     @BindView(R.id.imageViewTakePictureFragment)
     ImageView imageViewTakePictureFragment;
     @BindView(R.id.buttonTakePictureFragment)
     Button buttonTakePictureFragment;
     Unbinder unbinder;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private String imgAbsolutePath;
     private Uri imgUri;
+    private static int imageViewHeight;
+    private static int imageViewWidth;
 
 
     public TakePictureFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TakePictureFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TakePictureFragment newInstance(String param1, String param2) {
-        TakePictureFragment fragment = new TakePictureFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -94,22 +62,31 @@ public class TakePictureFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_take_picture, container, false);
+        if(savedInstanceState!=null) {
+            imgAbsolutePath = savedInstanceState.getString(IMG_ANSOLUTE_PATH_TAG);
+            imgUri = (Uri) savedInstanceState.getParcelable(IMG_URI_TAG);
+        }
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListener.onTakePictureFragmentViewCreated();
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                mListener.onTakePictureFragmentViewCreated(TakePictureFragment.this);
+                imageViewHeight=imageViewTakePictureFragment.getHeight();
+                imageViewWidth = imageViewTakePictureFragment.getWidth();
+            }
+        });
+
 
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -120,6 +97,13 @@ public class TakePictureFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(IMG_ANSOLUTE_PATH_TAG,imgAbsolutePath);
+        outState.putParcelable(IMG_URI_TAG,imgUri);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -138,7 +122,7 @@ public class TakePictureFragment extends Fragment {
 
     @OnClick(R.id.buttonTakePictureFragment)
     public void onViewClicked() {
-      //  mListener.onTakePictureFragmentViewCreated();
+        //  mListener.onTakePictureFragmentViewCreated();
         dispatchTakePictureIntent(imageViewTakePictureFragment);
     }
 
@@ -158,29 +142,28 @@ public class TakePictureFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 setImageToView(imgAbsolutePath);
                 mListener.onPictureBeenTaken(imgUri.toString());
-            } else
-                imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0)); //TODO change hard-coded
+            } //else
+              //  imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0));
 
         }
     }
 
     //let the activity put image from its data
-    public void setLastTakenImageToView(){
-        if(ImageUtils.lastTakenImageAbsolutePath!=null) {
+    public void setLastTakenImageToView() {
+        if (ImageUtils.lastTakenImageAbsolutePath != null) {
             setImageToView(ImageUtils.lastTakenImageAbsolutePath);
         }
     }
 
     private void setImageToView(String absolutePath) {
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        int screenHeight = metrics.heightPixels;
+//        int imageHeight = (int) Math.round(screenHeight * Consts.IMAGEVIEW_HEIGHT_PERCENTAGE);
+//        int imageWidth = metrics.widthPixels;
+     //   imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
+        ImageUtils.setPic(imageViewTakePictureFragment, absolutePath, imageViewHeight, imageViewWidth);
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenHeight = metrics.heightPixels;
-        int imageHeight = (int) Math.round(screenHeight * Consts.IMAGEVIEW_HEIGHT_PERCENTAGE);
-        int imageWidth = metrics.widthPixels;
-        imageViewTakePictureFragment.setLayoutParams(new RelativeLayout.LayoutParams(imageWidth, imageHeight));
-
-        ImageUtils.setPic(imageViewTakePictureFragment, absolutePath, imageHeight, imageWidth);
         buttonTakePictureFragment.setText(R.string.re_take_picture);
     }
 
@@ -197,7 +180,9 @@ public class TakePictureFragment extends Fragment {
     public interface OnFragmentInteractionListener {
 
         void onPictureBeenTaken(String imgUri);
-        void onTakePictureFragmentViewCreated();
+
+        void onTakePictureFragmentViewCreated(TakePictureFragment context);
+
         void onTakePictureFragmentDetach();
     }
 }

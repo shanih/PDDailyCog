@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="answers_id">
+        <item>@array/answers_1</item>
+        <item>@array/answers_2</item>
+        <item>@array/answers_3</item>
+        <item>@array/answers_4</item>
+        <item>@array/answers_5</item>
+        <item>@array/answers_6</item>
+    </array>
+    <string-array name="answers_1">
+        <item>מצוינת</item>
+        <item>טובה מאוד</item>
+        <item>טובה</item>
+        <item>סבירה</item>
+        <item>חלשה</item>
+    </string-array>
+    <string-array name="answers_2">
+        <item>מצוינת</item>
+        <item>טובה מאוד</item>
+        <item>טובה</item>
+        <item>סבירה</item>
+        <item>חלשה</item>
+    </string-array>
+    <string-array name="answers_3">
+        <item>ללא שינוי</item>
+        <item>שינוי קל</item>
+        <item>שינוי מסוים</item>
+        <item>שינוי משמעותי</item>
+        <item>השתנו לחלוטין</item>
+    </string-array>
+    <string-array name="answers_4">
+        <item>ללא שינוי</item>
+        <item>שינוי קל</item>
+        <item>שינוי מסוים</item>
+        <item>שינוי משמעותי</item>
+        <item>השתנו לחלוטין</item>
+    </string-array>
+    <string-array name="answers_5">
+        <item>שבע/ת רצון</item>
+        <item>שבע/ת רצון במידה מסוימת</item>
+        <item>לא שבע/ת רצון ולא מאוכזב/ת</item>
+        <item>מאוכזב/ת במידה מסוימת</item>
+        <item>מאוכזב/ת</item>
+    </string-array>
+    <string-array name="answers_6">
+        <item>שבע/ת רצון</item>
+        <item>שבע/ת רצון במידה מסוימת</item>
+        <item>לא שבע/ת רצון ולא מאוכזב/ת</item>
+        <item>מאוכזב/ת במידה מסוימת</item>
+        <item>מאוכזב/ת</item>
+    </string-array>
+    <string-array name="questions">
+        <item>כיצד תדרג את יכולתך הכללית לחשוב?</item>
+        <item>כיצד תדרג את יכולתך הכללית לתפקד?</item>
+        <item>מאז חלית, עד כמה השתנו תפקידיך ותחומי אחריותך בבית?</item>
+        <item>מאז חלית, עד כמה השתנו תפקידיך ותחומי אחריותך בקהילה או בעבודה?</item>
+        <item>מאז חלית, עד כמה את/ה שבע/ת רצון לגבי יכולתך לבצע את מה שאת/ה &lt;u&gt;צריך/ה&lt;&#47;u&gt; לעשות בחיי היום יום?</item>
+        <item>מאז חלית, עד כמה את/ה שבע/ת רצון לגבי יכולתך לבצע את מה שאת/ה &lt;u&gt;רוצה&lt;&#47;u&gt; לעשות בחיי היום יום?</item>
+    </string-array>
+</resources>

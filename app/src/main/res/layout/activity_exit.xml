@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/StyleLayuot"
+    tools:context="il.ac.pddailycogresearch.pddailycog.activities.simple.ExitActivity">
+
+    <TextView
+        style="@style/StyleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="40sp"
+        app:autoSizeMinTextSize="15sp"
+        android:layout_weight="2"
+        android:id="@+id/textViewExit"
+        android:text="@string/close_airplane_mode"/>
+    <Button
+        style="@style/StyleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/buttonExitOpenSettings"
+        android:layout_marginTop="45dp"
+        android:text="@string/open_settings" />
+    <Button
+        style="@style/StyleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/buttonExit"
+        android:layout_marginTop="45dp"
+        android:text="@string/exit"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

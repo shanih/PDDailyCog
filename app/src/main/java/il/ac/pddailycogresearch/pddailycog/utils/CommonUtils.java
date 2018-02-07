@@ -1,15 +1,31 @@
 package il.ac.pddailycogresearch.pddailycog.utils;
 
+import android.app.Activity;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
+import android.text.Spanned;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import il.ac.pddailycogresearch.pddailycog.R;
 import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListener;
 
 /**
@@ -17,31 +33,19 @@ import il.ac.pddailycogresearch.pddailycog.interfaces.IOnAlertDialogResultListen
  */
 
 public final class CommonUtils {
+
     private CommonUtils(){
 
     }
 
-    public static void createAlertDialog(final Context context, final int title, final int message,
-                                         final IOnAlertDialogResultListener alertDialogResultListener){
-        final AlertDialog ad = new AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                alertDialogResultListener.onResult(true);
-                            }
-                        })
-                .setNegativeButton(android.R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                alertDialogResultListener.onResult(false);
-                            }
-                        })
-                .create();
-        ad.show();
+    public static Spanned fromHtml(String html){
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(html);
+        }
+        return result;
     }
 
     public static void showMessage(Context context, String msg){
@@ -52,7 +56,34 @@ public final class CommonUtils {
         showMessage(context,context.getResources().getString(msgId));
     }
 
+    public static void hideKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     public static String getTimeStamp() {
         return new SimpleDateFormat(Consts.TIMESTAMP_FORMAT, Locale.US).format(new Date());
     }
+
+    public static void closeApp(Activity activity) {
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN)
+            activity.finishAffinity();
+        else
+            activity.finish();//TODO ask Tal
+    }
+
+    public static boolean isAirplaneMode(Context context) {
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1){
+            return Settings.System.getInt(context.getContentResolver(),Settings.Global.AIRPLANE_MODE_ON,0)==1;
+        } else {
+            return Settings.System.getInt(context.getContentResolver(),Settings.System.AIRPLANE_MODE_ON,0)==1;
+
+        }
+    }
+
+
 }
