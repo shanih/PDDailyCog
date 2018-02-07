@@ -26,8 +26,8 @@ public class AirplaneModeRequestActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.buttonOpenAirplaneModeSettings:
-               //startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
-                FirebaseIO.getInstance().logout();
+               startActivity(new Intent(Settings.ACTION_AIRPLANE_MODE_SETTINGS));
+               // FirebaseIO.getInstance().logout();
                 break;
             case R.id.buttonAirplaneOk:
                 if(CommonUtils.isAirplaneMode(this)) //TODO uncomment but its annoying

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -76,6 +77,7 @@ public class FirebaseIO {
 
     private void initUserDatabaseReference() {
         if (mAuth.getCurrentUser() != null) {
+            Crashlytics.setUserIdentifier(mAuth.getUid());
             mUserReference = database.getReference(Consts.USERS_KEY).child(mAuth.getCurrentUser().getUid());
             mUserReference.keepSynced(true);//because persistence is enable, need to make sure the data is synced with database
             mStorageReference = FirebaseStorage.getInstance().getReference().child(mAuth.getCurrentUser().getUid());

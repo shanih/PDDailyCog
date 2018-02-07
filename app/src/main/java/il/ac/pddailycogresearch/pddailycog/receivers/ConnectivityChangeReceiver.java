@@ -8,6 +8,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
+//import com.crashlytics.android.Crashlytics;
+
 import com.crashlytics.android.Crashlytics;
 
 import il.ac.pddailycogresearch.pddailycog.Firebase.FirebaseIO;
